@@ -1,0 +1,40 @@
+# application-docker.yml
+# Copie este arquivo para: src/main/resources/application-docker.yml em cada serviço
+# Ative com: SPRING_PROFILES_ACTIVE=docker
+
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/gestrest
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+    
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+
+  application:
+    name: gestrest-service
+
+server:
+  servlet:
+    context-path: /
+  error:
+    include-message: always
+    include-binding-errors: always
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true

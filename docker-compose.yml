@@ -1,0 +1,109 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: gestrest-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: gestrest
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - gestrest-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  auth-service:
+    build:
+      context: ./gestrest-auth-service
+      dockerfile: Dockerfile
+    image: gestrest/auth-service:1.0.0
+    container_name: gestrest-auth-service
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gestrest
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+    networks:
+      - gestrest-network
+
+  restaurante-service:
+    build:
+      context: ./gestrest-restaurante-service
+      dockerfile: Dockerfile
+    image: gestrest/restaurante-service:1.0.0
+    container_name: gestrest-restaurante-service
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8082:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gestrest
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+    networks:
+      - gestrest-network
+
+  pedido-service:
+    build:
+      context: ./gestrest-pedido-service
+      dockerfile: Dockerfile
+    image: gestrest/pedido-service:1.0.0
+    container_name: gestrest-pedido-service
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8083:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gestrest
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+    networks:
+      - gestrest-network
+
+  pagamento-service:
+    build:
+      context: ./gestrest-pagamento-service
+      dockerfile: Dockerfile
+    image: gestrest/pagamento-service:1.0.0
+    container_name: gestrest-pagamento-service
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8084:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gestrest
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+    networks:
+      - gestrest-network
+
+networks:
+  gestrest-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
