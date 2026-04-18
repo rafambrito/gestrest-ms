@@ -1,4 +1,4 @@
-package br.com.gestrest.pagamento.service.domain.ports.out;
+package br.com.gestrest.pagamento.service.domain.model.ports.out;
 
 import java.math.BigDecimal;
 

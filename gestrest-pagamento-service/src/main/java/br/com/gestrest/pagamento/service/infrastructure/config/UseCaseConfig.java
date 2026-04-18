@@ -4,10 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import br.com.gestrest.pagamento.service.application.usecase.impl.pagamento.ProcessarPagamentoUseCaseImpl;
-import br.com.gestrest.pagamento.service.domain.ports.in.pagamento.ProcessarPagamentoUseCase;
-import br.com.gestrest.pagamento.service.domain.ports.out.PagamentoEventPublisherPort;
-import br.com.gestrest.pagamento.service.domain.ports.out.PagamentoGatewayPort;
-import br.com.gestrest.pagamento.service.domain.ports.out.PagamentoRepositoryPort;
+import br.com.gestrest.pagamento.service.domain.model.ports.in.pagamento.ProcessarPagamentoUseCase;
+import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoEventPublisherPort;
+import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoGatewayPort;
+import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoRepositoryPort;
 
 @Configuration
 public class UseCaseConfig {

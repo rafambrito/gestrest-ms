@@ -1,35 +1,41 @@
-# 🔐 **GestRest Auth Service – Gestão de Usuários e Acesso**
+# gestrest-auth-service
 
-## 🎯 Responsabilidade
+Gestão de usuários e autenticação.
 
-Serviço de usuários e dados de acesso, com validações de cadastro e persistência por tipo de usuário.
+## Arquitetura
 
-## 🏗️ Arquitetura
+Clean Architecture com Ports and Adapters.
 
-- Clean Architecture
-- Ports and Adapters (Hexagonal)
+## Estrutura
 
-## 📁 Estrutura
+```
+src/main/java/br/com/gestrest/auth/service/
+├── adapters/
+│   ├── in/web/
+│   └── out/persistence/
+├── application/usecase/
+├── domain/
+│   ├── model/
+│   └── ports/
+└── infrastructure/config/
+```
 
-- `domain` (model, exception, ports.in, ports.out)
-- `application` (usecase.command, usecase.impl)
-- `adapters` (in.web, out.persistence)
-- `infrastructure.config`
-
-## 🧱 Entidades principais
+## Entidades
 
 - Usuario
 - TipoUsuario
 
-## ⚙️ Use cases principais
+## Use Cases
 
 - CriarUsuarioUseCase
+- AutenticarUsuarioUseCase
 
-## 🌐 Endpoints
+## Endpoints
 
 - `POST /api/v1/usuarios`
+- `POST /api/v1/auth/login`
 
-## ▶️ Execução
+## Execução
 
 ```bash
 ./mvnw spring-boot:run

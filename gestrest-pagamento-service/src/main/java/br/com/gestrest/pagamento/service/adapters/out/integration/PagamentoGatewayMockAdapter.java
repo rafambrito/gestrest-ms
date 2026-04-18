@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import org.springframework.stereotype.Component;
 
-import br.com.gestrest.pagamento.service.domain.ports.out.PagamentoGatewayPort;
+import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoGatewayPort;
 import lombok.RequiredArgsConstructor;
 
 @Component

@@ -1,4 +1,4 @@
-package br.com.gestrest.pagamento.service.domain.ports.out;
+package br.com.gestrest.pagamento.service.domain.model.ports.out;
 
 import br.com.gestrest.pagamento.service.domain.model.event.PagamentoAprovadoEvent;
 import br.com.gestrest.pagamento.service.domain.model.event.PagamentoPendenteEvent;

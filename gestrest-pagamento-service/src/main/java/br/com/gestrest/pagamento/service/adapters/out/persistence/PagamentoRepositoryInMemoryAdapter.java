@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.stereotype.Component;
 
 import br.com.gestrest.pagamento.service.domain.model.Pagamento;
-import br.com.gestrest.pagamento.service.domain.ports.out.PagamentoRepositoryPort;
+import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoRepositoryPort;
 
 @Component
 public class PagamentoRepositoryInMemoryAdapter implements PagamentoRepositoryPort {

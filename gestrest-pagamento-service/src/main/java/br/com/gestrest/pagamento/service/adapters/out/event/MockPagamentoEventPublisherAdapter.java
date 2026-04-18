@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import br.com.gestrest.pagamento.service.domain.model.event.PagamentoAprovadoEvent;
 import br.com.gestrest.pagamento.service.domain.model.event.PagamentoPendenteEvent;
-import br.com.gestrest.pagamento.service.domain.ports.out.PagamentoEventPublisherPort;
+import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoEventPublisherPort;
 
 @Component
 public class MockPagamentoEventPublisherAdapter implements PagamentoEventPublisherPort {

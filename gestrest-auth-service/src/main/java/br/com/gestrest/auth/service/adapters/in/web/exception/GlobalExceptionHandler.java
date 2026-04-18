@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import br.com.gestrest.auth.service.domain.exception.AutenticacaoException;
 import br.com.gestrest.auth.service.domain.exception.BusinessException;
+import br.com.gestrest.auth.service.domain.exception.DuplicateResourceException;
+import br.com.gestrest.auth.service.domain.exception.EntityNotFoundException;
 import br.com.gestrest.auth.service.domain.exception.DuplicateResourceException;
 import br.com.gestrest.auth.service.domain.exception.EntityNotFoundException;
 
@@ -42,6 +45,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ProblemDetail> handleConflict(DuplicateResourceException ex, WebRequest request) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(buildProblem(HttpStatus.CONFLICT, ex.getMessage(), request));
+    }
+
+    @ExceptionHandler(AutenticacaoException.class)
+    public ResponseEntity<ProblemDetail> handleAuthentication(AutenticacaoException ex, WebRequest request) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(buildProblem(HttpStatus.UNAUTHORIZED, ex.getMessage(), request));
     }
 
     @ExceptionHandler({BusinessException.class, IllegalArgumentException.class})

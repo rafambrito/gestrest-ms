@@ -10,7 +10,7 @@ import br.com.gestrest.pagamento.service.adapters.in.web.controller.doc.Pagament
 import br.com.gestrest.pagamento.service.adapters.in.web.dto.request.ProcessarPagamentoRequest;
 import br.com.gestrest.pagamento.service.adapters.in.web.dto.response.PagamentoResponse;
 import br.com.gestrest.pagamento.service.application.usecase.command.pagamento.ProcessarPagamentoCommand;
-import br.com.gestrest.pagamento.service.domain.ports.in.pagamento.ProcessarPagamentoUseCase;
+import br.com.gestrest.pagamento.service.domain.model.ports.in.pagamento.ProcessarPagamentoUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 

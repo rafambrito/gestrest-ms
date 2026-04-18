@@ -1,4 +1,4 @@
-package br.com.gestrest.pagamento.service.domain.ports.in.pagamento;
+package br.com.gestrest.pagamento.service.domain.model.ports.in.pagamento;
 
 import br.com.gestrest.pagamento.service.application.usecase.command.pagamento.ProcessarPagamentoCommand;
 import br.com.gestrest.pagamento.service.domain.model.Pagamento;

@@ -4,10 +4,10 @@ import br.com.gestrest.pagamento.service.application.usecase.command.pagamento.P
 import br.com.gestrest.pagamento.service.domain.model.Pagamento;
 import br.com.gestrest.pagamento.service.domain.model.event.PagamentoAprovadoEvent;
 import br.com.gestrest.pagamento.service.domain.model.event.PagamentoPendenteEvent;
-import br.com.gestrest.pagamento.service.domain.ports.in.pagamento.ProcessarPagamentoUseCase;
-import br.com.gestrest.pagamento.service.domain.ports.out.PagamentoEventPublisherPort;
-import br.com.gestrest.pagamento.service.domain.ports.out.PagamentoGatewayPort;
-import br.com.gestrest.pagamento.service.domain.ports.out.PagamentoRepositoryPort;
+import br.com.gestrest.pagamento.service.domain.model.ports.in.pagamento.ProcessarPagamentoUseCase;
+import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoEventPublisherPort;
+import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoGatewayPort;
+import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoRepositoryPort;
 
 public class ProcessarPagamentoUseCaseImpl implements ProcessarPagamentoUseCase {
 
