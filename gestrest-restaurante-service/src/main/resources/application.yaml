@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: gestrest-restaurante-service
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/gestrest
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    # Adiar inicialização do datasource até que o JPA esteja pronto ( necessário para Spring Boot >= 2.5 )
+    defer-datasource-initialization: true
+
+  # Garantir execução de scripts SQL (data.sql) na inicialização
+  sql:
+    init:
+      mode: always
+
+server:
+  port: 8080
