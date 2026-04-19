@@ -2,11 +2,14 @@
 
 Gestão de usuários e autenticação.
 
-## Arquitetura
+## 📌 Responsabilidade
+Autenticação e gestão de usuários.
 
+## 🧱 Arquitetura
 Clean Architecture com Ports and Adapters.
+Cliente → Auth → Token
 
-## Estrutura
+## 📂 Estrutura
 
 ```
 src/main/java/br/com/gestrest/auth/service/
@@ -20,22 +23,28 @@ src/main/java/br/com/gestrest/auth/service/
 └── infrastructure/config/
 ```
 
-## Entidades
+## 🧩 Entidades principais
 
 - Usuario
 - TipoUsuario
 
-## Use Cases
+## ⚙️ Use cases principais
 
 - CriarUsuarioUseCase
 - AutenticarUsuarioUseCase
 
-## Endpoints
+## 🌐 Endpoints
 
 - `POST /api/v1/usuarios`
 - `POST /api/v1/auth/login`
 
-## Execução
+## 🔄 Sequência
+
+1. Cliente envia credenciais
+2. Auth valida usuário
+3. Auth retorna token
+
+## ▶️ Execução
 
 ```bash
 ./mvnw spring-boot:run
