@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: gestrest-api
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/gestrest
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    # Adiar inicialização do datasource até que o JPA esteja pronto ( necessário para Spring Boot >= 2.5 )
+    defer-datasource-initialization: true
+
+  # Garantir execução de scripts SQL (data.sql) na inicialização
+  sql:
+    init:
+      mode: always
+
+server:
+  port: 8080
+
+gestrest:
+  pagamento:
+    service:
+      url: http://localhost:8082/api/v1/pagamentos
+
+resilience4j:
+  retry:
+    instances:
+      pagamentoRetry:
+        maxAttempts: 3
+        waitDuration: 1s
+  circuitbreaker:
+    instances:
+      pagamentoCircuitBreaker:
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        timeoutDuration: 5s
