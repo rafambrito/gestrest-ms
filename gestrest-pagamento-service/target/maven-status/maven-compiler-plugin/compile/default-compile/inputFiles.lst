@@ -1,9 +1,10 @@
+/home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/adapters/in/event/PedidoEventConsumer.java
 /home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/adapters/in/web/controller/PagamentoController.java
 /home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/adapters/in/web/controller/doc/PagamentoControllerDoc.java
 /home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/adapters/in/web/dto/request/ProcessarPagamentoRequest.java
 /home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/adapters/in/web/dto/response/PagamentoResponse.java
 /home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/adapters/in/web/exception/GlobalExceptionHandler.java
-/home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/adapters/out/event/MockPagamentoEventPublisherAdapter.java
+/home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/adapters/out/event/KafkaEventPublisherAdapter.java
 /home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/adapters/out/integration/PagamentoGatewayMockAdapter.java
 /home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/adapters/out/integration/PoliticaResilienciaPagamento.java
 /home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/adapters/out/persistence/PagamentoRepositoryInMemoryAdapter.java
@@ -13,6 +14,8 @@
 /home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/domain/model/PagamentoStatusEnum.java
 /home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/domain/model/event/PagamentoAprovadoEvent.java
 /home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/domain/model/event/PagamentoPendenteEvent.java
+/home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/domain/model/event/PedidoCriadoEvent.java
+/home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/domain/model/ports/in/PedidoEventConsumerPort.java
 /home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/domain/model/ports/in/pagamento/ProcessarPagamentoUseCase.java
 /home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/domain/model/ports/out/PagamentoEventPublisherPort.java
 /home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/main/java/br/com/gestrest/pagamento/service/domain/model/ports/out/PagamentoGatewayPort.java
