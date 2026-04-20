@@ -1,15 +1,19 @@
 package br.com.gestrest.pagamento.service.application.usecase.impl.pagamento;
 
+import java.time.LocalDateTime;
+
 import br.com.gestrest.pagamento.service.application.usecase.command.pagamento.ProcessarPagamentoCommand;
 import br.com.gestrest.pagamento.service.domain.model.Pagamento;
 import br.com.gestrest.pagamento.service.domain.model.event.PagamentoAprovadoEvent;
 import br.com.gestrest.pagamento.service.domain.model.event.PagamentoPendenteEvent;
+import br.com.gestrest.pagamento.service.domain.model.event.PedidoCriadoEvent;
 import br.com.gestrest.pagamento.service.domain.model.ports.in.pagamento.ProcessarPagamentoUseCase;
+import br.com.gestrest.pagamento.service.domain.model.ports.in.PedidoEventConsumerPort;
 import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoEventPublisherPort;
 import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoGatewayPort;
 import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoRepositoryPort;
 
-public class ProcessarPagamentoUseCaseImpl implements ProcessarPagamentoUseCase {
+public class ProcessarPagamentoUseCaseImpl implements ProcessarPagamentoUseCase, PedidoEventConsumerPort {
 
     private final PagamentoRepositoryPort pagamentoRepository;
     private final PagamentoGatewayPort pagamentoGateway;
@@ -34,11 +38,25 @@ public class ProcessarPagamentoUseCaseImpl implements ProcessarPagamentoUseCase 
         }
         if (aprovado) {
             pagamento.aprovar();
-            pagamentoEventPublisher.publicarAprovado(new PagamentoAprovadoEvent(pagamento.getPedidoId(), pagamento.getUsuarioId()));
+            pagamentoEventPublisher.publicarAprovado(new PagamentoAprovadoEvent(
+                pagamento.getPedidoId(),
+                pagamento.getUsuarioId(),
+                LocalDateTime.now()
+            ));
         } else {
             pagamento.marcarPendente();
-            pagamentoEventPublisher.publicarPendente(new PagamentoPendenteEvent(pagamento.getPedidoId(), pagamento.getUsuarioId()));
+            pagamentoEventPublisher.publicarPendente(new PagamentoPendenteEvent(
+                pagamento.getPedidoId(),
+                pagamento.getUsuarioId(),
+                LocalDateTime.now()
+            ));
         }
         return pagamentoRepository.salvar(pagamento);
+    }
+
+    @Override
+    public void onPedidoCriado(PedidoCriadoEvent event) {
+        var command = new ProcessarPagamentoCommand(event.pedidoId(), event.usuarioId(), event.valor());
+        processar(command);
     }
 }
