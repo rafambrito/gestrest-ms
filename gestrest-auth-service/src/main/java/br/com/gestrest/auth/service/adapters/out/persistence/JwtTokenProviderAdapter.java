@@ -57,4 +57,24 @@ public class JwtTokenProviderAdapter implements JwtTokenProviderPort {
                 .getPayload();
         return claims.getSubject();
     }
+
+    @Override
+    public Long getUserIdFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(Keys.hmacShaKeyFor(secret.getBytes()))
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+        return claims.get("userId", Long.class);
+    }
+
+    @Override
+    public String getTipoUsuarioFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(Keys.hmacShaKeyFor(secret.getBytes()))
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+        return claims.get("tipoUsuario", String.class);
+    }
 }
