@@ -25,11 +25,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.gestrest.pedido.service.adapter.in.web.controller.RestauranteController;
-import br.com.gestrest.pedido.service.adapter.in.web.dto.request.AtualizarRestauranteRequest;
-import br.com.gestrest.pedido.service.adapter.in.web.dto.request.CriarRestauranteRequest;
-import br.com.gestrest.pedido.service.adapter.in.web.dto.response.RestauranteResponse;
-import br.com.gestrest.pedido.service.adapter.in.web.mapper.RestauranteWebMapper;
+import br.com.gestrest.pedido.service.adapters.in.web.controller.RestauranteController;
+import br.com.gestrest.pedido.service.adapters.in.web.dto.request.AtualizarRestauranteRequest;
+import br.com.gestrest.pedido.service.adapters.in.web.dto.request.CriarRestauranteRequest;
+import br.com.gestrest.pedido.service.adapters.in.web.dto.response.RestauranteResponse;
+import br.com.gestrest.pedido.service.adapters.in.web.mapper.RestauranteWebMapper;
 import br.com.gestrest.pedido.service.domain.exception.RestauranteNaoEncontradoException;
 import br.com.gestrest.pedido.service.domain.model.Restaurante;
 import br.com.gestrest.pedido.service.domain.model.ports.in.restaurante.AtualizarRestauranteUseCase;
@@ -38,7 +38,7 @@ import br.com.gestrest.pedido.service.domain.model.ports.in.restaurante.CriarRes
 import br.com.gestrest.pedido.service.domain.model.ports.in.restaurante.ExcluirRestauranteUseCase;
 import br.com.gestrest.pedido.service.domain.model.ports.in.restaurante.ListarRestauranteUseCase;
 import br.com.gestrest.pedido.service.infrastructure.GestRestApiApplication;
-import br.com.gestrest.pedido.service.adapter.in.web.exception.GlobalExceptionHandler;
+import br.com.gestrest.pedido.service.adapters.in.web.exception.GlobalExceptionHandler;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(RestauranteController.class)

@@ -14,7 +14,7 @@ import org.springframework.core.MethodParameter;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
-import br.com.gestrest.pedido.service.adapter.in.web.exception.GlobalExceptionHandler;
+import br.com.gestrest.pedido.service.adapters.in.web.exception.GlobalExceptionHandler;
 import br.com.gestrest.pedido.service.domain.exception.BusinessException;
 import br.com.gestrest.pedido.service.domain.exception.DuplicateResourceException;
 import br.com.gestrest.pedido.service.domain.exception.EntityNotFoundException;

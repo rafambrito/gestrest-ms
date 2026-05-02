@@ -35,7 +35,7 @@ class GlobalExceptionHandlerTest {
     @Test
     void handleNotFound() {
         WebRequest req = new ServletWebRequest(new MockHttpServletRequest());
-        ResponseEntity<ProblemDetail> r = handler.handleNotFound(new EntityNotFoundException("Restaurante id 99 nao encontrado"), req);
+        ResponseEntity<ProblemDetail> r = handler.handleNotFound(new EntityNotFoundException(99L, "Restaurante"), req);
         ProblemDetail body = Objects.requireNonNull(r.getBody());
         assertEquals(404, body.getStatus());
     }

@@ -13,10 +13,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import br.com.gestrest.pedido.service.adapter.out.persistence.RestauranteRepositoryAdapter;
-import br.com.gestrest.pedido.service.adapter.out.persistence.entity.RestauranteEntity;
-import br.com.gestrest.pedido.service.adapter.out.persistence.mapper.RestaurantePersistenceMapper;
-import br.com.gestrest.pedido.service.adapter.out.persistence.repository.RestauranteJpaRepository;
+import br.com.gestrest.pedido.service.adapters.out.persistence.RestauranteRepositoryAdapter;
+import br.com.gestrest.pedido.service.adapters.out.persistence.entity.RestauranteEntity;
+import br.com.gestrest.pedido.service.adapters.out.persistence.mapper.RestaurantePersistenceMapper;
+import br.com.gestrest.pedido.service.adapters.out.persistence.repository.RestauranteJpaRepository;
 import br.com.gestrest.pedido.service.domain.model.Restaurante;
 
 @ExtendWith(MockitoExtension.class)

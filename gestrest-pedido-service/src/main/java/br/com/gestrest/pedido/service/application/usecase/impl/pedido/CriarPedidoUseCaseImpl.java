@@ -7,19 +7,19 @@ import br.com.gestrest.pedido.service.domain.model.ItemPedido;
 import br.com.gestrest.pedido.service.domain.model.Pedido;
 import br.com.gestrest.pedido.service.domain.model.event.PedidoCriadoEvent;
 import br.com.gestrest.pedido.service.domain.model.ports.in.pedido.CriarPedidoUseCase;
+import br.com.gestrest.pedido.service.domain.model.ports.out.PagamentoClientPort;
 import br.com.gestrest.pedido.service.domain.model.ports.out.PagamentoEventPublisherPort;
-import br.com.gestrest.pedido.service.domain.model.ports.out.PagamentoProcessadorPort;
 import br.com.gestrest.pedido.service.domain.model.ports.out.PedidoEventPublisherPort;
 import br.com.gestrest.pedido.service.domain.model.ports.out.PedidoRepositoryPort;
 
 public class CriarPedidoUseCaseImpl implements CriarPedidoUseCase {
 
     private final PedidoRepositoryPort pedidoRepository;
-    private final PagamentoProcessadorPort pagamentoProcessador;
+    private final PagamentoClientPort pagamentoProcessador;
     private final PedidoEventPublisherPort pedidoEventPublisher;
     private final PagamentoEventPublisherPort pagamentoEventPublisher;
 
-    public CriarPedidoUseCaseImpl(PedidoRepositoryPort pedidoRepository, PagamentoProcessadorPort pagamentoProcessador,
+    public CriarPedidoUseCaseImpl(PedidoRepositoryPort pedidoRepository, PagamentoClientPort pagamentoProcessador,
             PedidoEventPublisherPort pedidoEventPublisher, PagamentoEventPublisherPort pagamentoEventPublisher) {
         this.pedidoRepository = pedidoRepository;
         this.pagamentoProcessador = pagamentoProcessador;

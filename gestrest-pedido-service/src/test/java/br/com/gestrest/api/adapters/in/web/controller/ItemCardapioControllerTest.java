@@ -27,11 +27,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.gestrest.pedido.service.adapter.in.web.controller.ItemCardapioController;
-import br.com.gestrest.pedido.service.adapter.in.web.dto.request.AtualizarItemCardapioRequest;
-import br.com.gestrest.pedido.service.adapter.in.web.dto.request.CriarItemCardapioRequest;
-import br.com.gestrest.pedido.service.adapter.in.web.dto.response.ItemCardapioResponse;
-import br.com.gestrest.pedido.service.adapter.in.web.mapper.ItemCardapioWebMapper;
+import br.com.gestrest.pedido.service.adapters.in.web.controller.ItemCardapioController;
+import br.com.gestrest.pedido.service.adapters.in.web.dto.request.AtualizarItemCardapioRequest;
+import br.com.gestrest.pedido.service.adapters.in.web.dto.request.CriarItemCardapioRequest;
+import br.com.gestrest.pedido.service.adapters.in.web.dto.response.ItemCardapioResponse;
+import br.com.gestrest.pedido.service.adapters.in.web.mapper.ItemCardapioWebMapper;
 import br.com.gestrest.pedido.service.domain.exception.EntityNotFoundException;
 import br.com.gestrest.pedido.service.domain.model.ItemCardapio;
 import br.com.gestrest.pedido.service.domain.model.ports.in.itemcardapio.AtualizarItemCardapioUseCase;
@@ -40,7 +40,7 @@ import br.com.gestrest.pedido.service.domain.model.ports.in.itemcardapio.CriarIt
 import br.com.gestrest.pedido.service.domain.model.ports.in.itemcardapio.ExcluirItemCardapioUseCase;
 import br.com.gestrest.pedido.service.domain.model.ports.in.itemcardapio.ListarItensPorRestauranteUseCase;
 import br.com.gestrest.pedido.service.infrastructure.GestRestApiApplication;
-import br.com.gestrest.pedido.service.adapter.in.web.exception.GlobalExceptionHandler;
+import br.com.gestrest.pedido.service.adapters.in.web.exception.GlobalExceptionHandler;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(ItemCardapioController.class)

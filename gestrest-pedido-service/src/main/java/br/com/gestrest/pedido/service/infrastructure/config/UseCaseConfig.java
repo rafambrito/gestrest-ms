@@ -32,8 +32,8 @@ import br.com.gestrest.pedido.service.domain.model.ports.in.restaurante.ExcluirR
 import br.com.gestrest.pedido.service.domain.model.ports.in.restaurante.ListarRestauranteUseCase;
 import br.com.gestrest.pedido.service.domain.model.ports.out.DonoRestauranteValidatorPort;
 import br.com.gestrest.pedido.service.domain.model.ports.out.ItemCardapioRepositoryPort;
+import br.com.gestrest.pedido.service.domain.model.ports.out.PagamentoClientPort;
 import br.com.gestrest.pedido.service.domain.model.ports.out.PagamentoEventPublisherPort;
-import br.com.gestrest.pedido.service.domain.model.ports.out.PagamentoProcessadorPort;
 import br.com.gestrest.pedido.service.domain.model.ports.out.PedidoEventPublisherPort;
 import br.com.gestrest.pedido.service.domain.model.ports.out.PedidoRepositoryPort;
 import br.com.gestrest.pedido.service.domain.model.ports.out.RestauranteRepositoryPort;
@@ -108,7 +108,7 @@ public class UseCaseConfig {
 	@Bean
 	public CriarPedidoUseCase criarPedidoUseCase(
 			PedidoRepositoryPort pedidoRepository,
-			PagamentoProcessadorPort pagamentoProcessador,
+			PagamentoClientPort pagamentoProcessador,
 			PedidoEventPublisherPort pedidoEventPublisher,
 			PagamentoEventPublisherPort pagamentoEventPublisher) {
 		return new CriarPedidoUseCaseImpl(

@@ -15,9 +15,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import br.com.gestrest.restaurante.service.application.usecase.command.itemcardapio.AtualizarItemCardapioCommand;
 import br.com.gestrest.restaurante.service.application.usecase.impl.itemcardapio.AtualizarItemCardapioUseCaseImpl;
 import br.com.gestrest.restaurante.service.domain.exception.EntityNotFoundException;
+import br.com.gestrest.restaurante.service.domain.exception.RestauranteNaoEncontradoException;
 import br.com.gestrest.restaurante.service.domain.model.ItemCardapio;
+import br.com.gestrest.restaurante.service.domain.model.Restaurante;
 import br.com.gestrest.restaurante.service.domain.model.ports.out.ItemCardapioRepositoryPortRead;
 import br.com.gestrest.restaurante.service.domain.model.ports.out.ItemCardapioRepositoryPortWrite;
 import br.com.gestrest.restaurante.service.domain.model.ports.out.RestauranteRepositoryPortRead;
@@ -39,26 +42,46 @@ class AtualizarItemCardapioUseCaseImplTest {
     private AtualizarItemCardapioUseCaseImpl useCase;
 
     @Test
+    @DisplayName("Deve atualizar item com restaurante válido")
     void atualizarSucesso() {
-        var existente = ItemCardapio.existente(5L, "Sanduiche Natural", "Pao integral com frango desfiado e salada", new BigDecimal("18.00"), 2L,
-            true, "/itens/sanduiche-natural.jpg");
+        var existente = ItemCardapio.existente(5L, "Sanduiche Natural", "Pao integral com frango desfiado e salada", new BigDecimal("18.00"), true, 2L);
+        var command = new AtualizarItemCardapioCommand("Sanduiche Natural Premium", "Pao integral, frango desfiado, ricota e folhas", new BigDecimal("22.50"),
+            false, 2L);
         var atualizado = ItemCardapio.existente(5L, "Sanduiche Natural Premium", "Pao integral, frango desfiado, ricota e folhas", new BigDecimal("22.50"),
-            2L, false, "/itens/sanduiche-natural-premium.jpg");
+            false, 2L);
+        var restaurante = Restaurante.existente(2L, "Restaurante Teste", true);
 
         when(itemCardapioRepositoryRead.buscarPorId(5L)).thenReturn(Optional.of(existente));
-        when(itemCardapioRepositoryWrite.salvar(any(ItemCardapio.class))).thenReturn(atualizado);
+        when(restauranteRepositoryRead.buscarPorId(2L)).thenReturn(Optional.of(restaurante));
+        when(itemCardapioRepositoryWrite.salvar(any(ItemCardapio.class))).thenAnswer(inv -> inv.getArgument(0));
 
-        var result = useCase.atualizar(atualizado);
+        var result = useCase.atualizar(5L, command);
 
         assertEquals("Sanduiche Natural Premium", result.getNome());
         assertEquals(0, result.getPreco().compareTo(new BigDecimal("22.50")));
     }
 
     @Test
+    @DisplayName("Deve falhar quando item não existir")
     void atualizarNaoEncontrado() {
-        var atualizado = ItemCardapio.existente(55L, "Sanduiche Natural Premium", "Pao integral, frango desfiado, ricota e folhas", new BigDecimal("22.50"),
-                2L, false, "/itens/sanduiche-natural-premium.jpg");
+        var command = new AtualizarItemCardapioCommand("Sanduiche Natural Premium", "Pao integral, frango desfiado, ricota e folhas", new BigDecimal("22.50"),
+                false, 2L);
+
         when(itemCardapioRepositoryRead.buscarPorId(55L)).thenReturn(Optional.empty());
-        assertThrows(EntityNotFoundException.class, () -> useCase.atualizar(atualizado));
+
+        assertThrows(EntityNotFoundException.class, () -> useCase.atualizar(55L, command));
+    }
+
+    @Test
+    @DisplayName("Deve falhar quando restaurante não existir")
+    void atualizarComRestauranteInexistente() {
+        var existente = ItemCardapio.existente(5L, "Sanduiche Natural", "Pao integral com frango desfiado e salada", new BigDecimal("18.00"), true, 2L);
+        var command = new AtualizarItemCardapioCommand("Sanduiche Natural Premium", "Pao integral, frango desfiado, ricota e folhas", new BigDecimal("22.50"),
+            false, 999L);
+
+        when(itemCardapioRepositoryRead.buscarPorId(5L)).thenReturn(Optional.of(existente));
+        when(restauranteRepositoryRead.buscarPorId(999L)).thenReturn(Optional.empty());
+
+        assertThrows(RestauranteNaoEncontradoException.class, () -> useCase.atualizar(5L, command));
     }
 }

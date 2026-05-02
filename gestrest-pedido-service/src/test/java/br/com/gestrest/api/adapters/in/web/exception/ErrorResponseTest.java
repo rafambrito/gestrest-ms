@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import br.com.gestrest.pedido.service.adapter.in.web.exception.ErrorResponse;
+import br.com.gestrest.pedido.service.adapters.in.web.exception.ErrorResponse;
 
 class ErrorResponseTest {
 

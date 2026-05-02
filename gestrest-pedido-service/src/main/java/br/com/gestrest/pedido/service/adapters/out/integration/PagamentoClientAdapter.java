@@ -9,14 +9,14 @@ import org.springframework.web.client.RestClientException;
 
 import br.com.gestrest.pedido.service.adapters.out.integration.dto.PagamentoRequest;
 import br.com.gestrest.pedido.service.adapters.out.integration.dto.PagamentoResponse;
-import br.com.gestrest.pedido.service.domain.model.ports.out.PagamentoProcessadorPort;
+import br.com.gestrest.pedido.service.domain.model.ports.out.PagamentoClientPort;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class PagamentoServiceAdapter implements PagamentoProcessadorPort {
+public class PagamentoClientAdapter implements PagamentoClientPort {
 
     private final RestTemplate restTemplate;
 
@@ -38,7 +38,7 @@ public class PagamentoServiceAdapter implements PagamentoProcessadorPort {
                 return response.aprovado();
             }
             return false;
-        } catch (RestClientException ex) {
+        } catch (RuntimeException ex) {
             return false;
         }
     }

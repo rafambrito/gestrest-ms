@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import br.com.gestrest.pedido.service.domain.exception.BusinessException;
+
 public class Pedido {
 
     private Long id;
@@ -54,11 +56,20 @@ public class Pedido {
     }
 
     public void marcarPendentePagamento() {
+        if (status != PedidoStatusEnum.CRIADO) {
+            throw new BusinessException("Transicao para PENDENTE_PAGAMENTO invalida para status atual: " + status);
+        }
         this.status = PedidoStatusEnum.PENDENTE_PAGAMENTO;
         this.dataUltimaAlteracao = LocalDateTime.now();
     }
 
     public void marcarPago() {
+        if (status == PedidoStatusEnum.PAGO) {
+            throw new BusinessException("Pedido ja esta pago");
+        }
+        if (status != PedidoStatusEnum.CRIADO && status != PedidoStatusEnum.PENDENTE_PAGAMENTO) {
+            throw new BusinessException("Transicao para PAGO invalida para status atual: " + status);
+        }
         this.status = PedidoStatusEnum.PAGO;
         this.dataUltimaAlteracao = LocalDateTime.now();
     }
