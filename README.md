@@ -10,10 +10,80 @@ Plataforma de gestão de pedidos para restaurantes em arquitetura de microservi�
 
 ## 🏗️ Arquitetura
 
-Microserviços Spring Boot com Clean Architecture (Ports & Adapters) e comunicação síncrona via REST.
-Cliente → Auth → Restaurante → Pedido → Pagamento
+Microserviços independentes baseados em Clean Architecture (Ports & Adapters), com comunicação:
 
-### Serviços
+* Síncrona via REST
+* Assíncrona via Kafka
+
+Integrações externas:
+
+* Serviço de pagamento (`procpag`)
+
+Principais fluxos:
+
+Cliente → Auth → Pedido → Pagamento → Procpag
+Pedido → Kafka → Pagamento (eventos assíncronos)
+
+## 🧱 Visão de Arquitetura
+
+```mermaid
+graph TD
+    Cliente --> AuthService
+    Cliente --> PedidoService
+
+    PedidoService -->|REST: criar pagamento| PagamentoService
+    PagamentoService -->|HTTP| Procpag
+
+    PedidoService -->|pedido.criado| Kafka
+    PagamentoService -->|pagamento.aprovado / pagamento.pendente| Kafka
+
+    Kafka -->|pagamento.aprovado| PedidoService
+    Kafka -->|pagamento.pendente| PedidoService
+
+    AuthService --> Postgres
+    PedidoService --> Postgres
+    PagamentoService --> Postgres
+```
+
+
+## 🔄 Fluxo de Pedido → Pagamento
+
+Este diagrama representa o fluxo completo de autenticação, criação de pedido, processamento de pagamento e atualização de status, incluindo comunicação síncrona e eventos assíncronos via Kafka.
+
+```mermaid
+sequenceDiagram
+    participant Cliente
+    participant AuthService
+    participant PedidoService
+    participant PagamentoService
+    participant Procpag
+    participant Kafka
+
+    Cliente->>AuthService: Login (credenciais)
+    AuthService-->>Cliente: JWT Token
+
+    Cliente->>PedidoService: Criar Pedido (JWT)
+    PedidoService->>Kafka: Evento pedido.criado
+
+    PedidoService->>PagamentoService: Solicitar pagamento
+
+    PagamentoService->>Procpag: POST /requisicao
+    Procpag-->>PagamentoService: pagamento_id
+
+    PagamentoService->>Procpag: GET /requisicao/{id}
+    Procpag-->>PagamentoService: status
+
+    alt Pagamento aprovado
+        PagamentoService->>Kafka: pagamento.aprovado
+        PedidoService->>PedidoService: Atualiza status = PAGO
+    else Pagamento pendente
+        PagamentoService->>Kafka: pagamento.pendente
+        PedidoService->>PedidoService: Mantém pendente
+    end
+```
+
+
+### 📦 Serviços
 
 - **auth-service**: autenticação e gestão de usuários
 - **restaurante-service**: gestão de restaurantes e cardápios
@@ -25,6 +95,9 @@ Cliente → Auth → Restaurante → Pedido → Pagamento
 - Java 21
 - Spring Boot 3
 - PostgreSQL
+- JWT 
+- Kafka 
+- Resilience4j (Circuit Breaker, Retry)
 - Docker Compose
 - Maven
 
@@ -34,7 +107,18 @@ Cliente → Auth → Restaurante → Pedido → Pagamento
 docker compose up --build
 ```
 
-## � Documentação da API (Swagger)
+## 🐳 Serviços executados
+
+O ambiente sobe automaticamente:
+
+* PostgreSQL
+* Kafka + Zookeeper
+* Serviço externo de pagamento (`procpag`)
+* Todos os microserviços
+
+Todos conectados via rede Docker `fase3net`.
+
+## 📖 Documentação da API (Swagger)
 
 Após iniciar os serviços, acesse a documentação Swagger de cada microserviço:
 
@@ -43,7 +127,7 @@ Após iniciar os serviços, acesse a documentação Swagger de cada microserviç
 - **Pedido Service** (porta 8083): [http://localhost:8083/swagger-ui.html](http://localhost:8083/swagger-ui.html)
 - **Pagamento Service** (porta 8084): [http://localhost:8084/swagger-ui.html](http://localhost:8084/swagger-ui.html)
 
-## �📁 Estrutura
+## 📁 Estrutura
 
 ```
 gestrest-ms/
@@ -53,13 +137,6 @@ gestrest-ms/
 ├── gestrest-pagamento-service/
 └── docker-compose.yml
 ```
-
-## 🚀 Próximos Passos
-
-- Implementação JWT
-- Mensageria com Kafka
-- Circuit Breaker com Resilience4j
-- Observabilidade com Micrometer
 
 ## 👤 Autor
 
