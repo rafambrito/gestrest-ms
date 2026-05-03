@@ -25,10 +25,12 @@ public class JwtTokenProviderAdapter implements JwtTokenProviderPort {
         var now = new Date();
         var expiryDate = new Date(now.getTime() + expiration);
 
+            var tipoUsuario = usuario.getTipoUsuario() != null ? usuario.getTipoUsuario().getNome() : null;
+
         return Jwts.builder()
                 .subject(usuario.getLogin())
                 .claim("userId", usuario.getId())
-                .claim("tipoUsuario", usuario.getTipoUsuario().getNome())
+                .claim("tipoUsuario", tipoUsuario)
                 .issuedAt(now)
                 .expiration(expiryDate)
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()))

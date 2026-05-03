@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://postgres:5432/gestrest-ms
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true
+
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      bootstrap-servers: kafka:9092
+      group-id: pagamento-service
+    producer:
+      bootstrap-servers: kafka:9092
+
+jwt:
+  secret: ${JWT_SECRET:gestrest-secret-key-for-jwt-tokens-very-long-and-secure}
+
+server:
+  port: 8083
+
+procpag:
+  url: http://procpag:8089
+  timeout: 5s

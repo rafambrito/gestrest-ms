@@ -48,6 +48,10 @@ Token JWT contém:
 
 Validação e extração de claims realizados via JwtTokenProviderAdapter.
 
+## 📖 Documentação da API (Swagger)
+
+Após iniciar o serviço, acesse a documentação Swagger em: [http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html)
+
 ## 🔒 Proteção de Endpoints
 
 ### Públicos

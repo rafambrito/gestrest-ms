@@ -34,7 +34,16 @@ Cliente → Auth → Restaurante → Pedido → Pagamento
 docker compose up --build
 ```
 
-## 📁 Estrutura
+## � Documentação da API (Swagger)
+
+Após iniciar os serviços, acesse a documentação Swagger de cada microserviço:
+
+- **Auth Service** (porta 8081): [http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html)
+- **Restaurante Service** (porta 8082): [http://localhost:8082/swagger-ui.html](http://localhost:8082/swagger-ui.html)
+- **Pedido Service** (porta 8083): [http://localhost:8083/swagger-ui.html](http://localhost:8083/swagger-ui.html)
+- **Pagamento Service** (porta 8084): [http://localhost:8084/swagger-ui.html](http://localhost:8084/swagger-ui.html)
+
+## �📁 Estrutura
 
 ```
 gestrest-ms/

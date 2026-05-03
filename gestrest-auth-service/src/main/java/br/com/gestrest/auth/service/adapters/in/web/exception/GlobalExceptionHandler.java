@@ -16,8 +16,6 @@ import br.com.gestrest.auth.service.domain.exception.AutenticacaoException;
 import br.com.gestrest.auth.service.domain.exception.BusinessException;
 import br.com.gestrest.auth.service.domain.exception.DuplicateResourceException;
 import br.com.gestrest.auth.service.domain.exception.EntityNotFoundException;
-import br.com.gestrest.auth.service.domain.exception.DuplicateResourceException;
-import br.com.gestrest.auth.service.domain.exception.EntityNotFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {

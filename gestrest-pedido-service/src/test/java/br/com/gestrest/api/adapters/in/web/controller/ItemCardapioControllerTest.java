@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -17,10 +18,10 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -39,11 +40,11 @@ import br.com.gestrest.pedido.service.domain.model.ports.in.itemcardapio.BuscarI
 import br.com.gestrest.pedido.service.domain.model.ports.in.itemcardapio.CriarItemCardapioUseCase;
 import br.com.gestrest.pedido.service.domain.model.ports.in.itemcardapio.ExcluirItemCardapioUseCase;
 import br.com.gestrest.pedido.service.domain.model.ports.in.itemcardapio.ListarItensPorRestauranteUseCase;
-import br.com.gestrest.pedido.service.infrastructure.GestRestApiApplication;
 import br.com.gestrest.pedido.service.adapters.in.web.exception.GlobalExceptionHandler;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(ItemCardapioController.class)
+@AutoConfigureMockMvc(addFilters = false)
 @Import(GlobalExceptionHandler.class)
 class ItemCardapioControllerTest {
 
@@ -70,6 +71,9 @@ class ItemCardapioControllerTest {
 
     @MockitoBean
     private ItemCardapioWebMapper mapper;
+
+    @MockitoBean
+    private br.com.gestrest.pedido.service.adapters.in.web.filter.JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Test
     void criar_sucesso() throws Exception {
@@ -136,7 +140,7 @@ class ItemCardapioControllerTest {
                 .content(body))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.status").value(400))
-            .andExpect(jsonPath("$.errors[0]").value(org.hamcrest.Matchers.containsString("restauranteId")));
+            .andExpect(jsonPath("$.errors[0]").value((org.hamcrest.Matcher<? super String>) containsString("restauranteId")));
     }
 
     @Test

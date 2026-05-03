@@ -25,12 +25,33 @@ Pedido → Pagamento → Status
 - `POST /api/v1/pagamentos`
 
 ## 🔄 Sequência
-1. Pedido envia solicitação de pagamento
-2. Pagamento processa cobrança
-3. Pagamento retorna status
-4. Pedido atualiza estado
+1. Pedido cria registro de pagamento
+2. Pagamento envia requisição a procpag
+3. Pagamento consulta status externo
+4. Pagamento atualiza status em PostgreSQL
+5. Evento de aprovação ou pendência é publicado
 
-## ▶️ Execução
+## 🌐 Integração com procpag
+- `POST /requisicao` com `valor`, `pagamento_id`, `cliente_id`
+- `GET /requisicao/{pagamento_id}` para consulta de status
+- sucesso → APROVADO
+- falha/timeout → PENDENTE
+
+## 📦 Banco de dados
+- PostgreSQL
+- tabela `pagamento`
+- campos: `id`, `pedido_id`, `usuario_id`, `valor`, `status`, `pagamento_id_externo`
+
+## ▶️ Execução local
 ```bash
 mvn spring-boot:run
 ```
+
+## ▶️ Execução em Docker
+```bash
+docker compose up --build
+```
+
+## 📖 Documentação da API (Swagger)
+
+Após iniciar o serviço, acesse a documentação Swagger em: [http://localhost:8084/swagger-ui.html](http://localhost:8084/swagger-ui.html)

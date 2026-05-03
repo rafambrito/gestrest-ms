@@ -48,6 +48,10 @@ src/main/java/br/com/gestrest/restaurante/service/
 - `DELETE /api/v1/restaurantes/{id}`
 - `POST /api/v1/itens-cardapio`
 - `GET /api/v1/itens-cardapio/{id}`
+
+## 📖 Documentação da API (Swagger)
+
+Após iniciar o serviço, acesse a documentação Swagger em: [http://localhost:8082/swagger-ui.html](http://localhost:8082/swagger-ui.html)
 - `GET /api/v1/itens-cardapio?restauranteId={id}`
 - `PUT /api/v1/itens-cardapio/{id}`
 - `DELETE /api/v1/itens-cardapio/{id}`

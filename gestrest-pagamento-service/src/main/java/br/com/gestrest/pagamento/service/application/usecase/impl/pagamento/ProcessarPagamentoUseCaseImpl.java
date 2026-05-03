@@ -11,6 +11,7 @@ import br.com.gestrest.pagamento.service.domain.model.ports.in.pagamento.Process
 import br.com.gestrest.pagamento.service.domain.model.ports.in.PedidoEventConsumerPort;
 import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoEventPublisherPort;
 import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoGatewayPort;
+import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoGatewayResponse;
 import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoRepositoryPort;
 
 public class ProcessarPagamentoUseCaseImpl implements ProcessarPagamentoUseCase, PedidoEventConsumerPort {
@@ -30,20 +31,29 @@ public class ProcessarPagamentoUseCaseImpl implements ProcessarPagamentoUseCase,
     @Override
     public Pagamento processar(ProcessarPagamentoCommand command) {
         var pagamento = Pagamento.criar(command.pedidoId(), command.usuarioId(), command.valor());
-        boolean aprovado;
+        pagamento = pagamentoRepository.salvar(pagamento);
+
         try {
-            aprovado = pagamentoGateway.cobrar(command.pedidoId(), command.usuarioId(), command.valor());
+            var gatewayResponse = pagamentoGateway.iniciarPagamento(pagamento.getId(), pagamento.getUsuarioId(), pagamento.getValor());
+            pagamento.associarPagamentoExterno(gatewayResponse.pagamentoIdExterno());
+
+            var status = pagamentoGateway.consultarStatus(gatewayResponse.pagamentoIdExterno());
+            if ("sucesso".equalsIgnoreCase(status)) {
+                pagamento.aprovar();
+                pagamentoEventPublisher.publicarAprovado(new PagamentoAprovadoEvent(
+                    pagamento.getPedidoId(),
+                    pagamento.getUsuarioId(),
+                    LocalDateTime.now()
+                ));
+            } else {
+                pagamento.marcarPendente();
+                pagamentoEventPublisher.publicarPendente(new PagamentoPendenteEvent(
+                    pagamento.getPedidoId(),
+                    pagamento.getUsuarioId(),
+                    LocalDateTime.now()
+                ));
+            }
         } catch (RuntimeException ex) {
-            aprovado = false;
-        }
-        if (aprovado) {
-            pagamento.aprovar();
-            pagamentoEventPublisher.publicarAprovado(new PagamentoAprovadoEvent(
-                pagamento.getPedidoId(),
-                pagamento.getUsuarioId(),
-                LocalDateTime.now()
-            ));
-        } else {
             pagamento.marcarPendente();
             pagamentoEventPublisher.publicarPendente(new PagamentoPendenteEvent(
                 pagamento.getPedidoId(),

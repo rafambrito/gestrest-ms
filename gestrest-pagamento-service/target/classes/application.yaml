@@ -1,6 +1,22 @@
 spring:
   application:
     name: gestrest-pagamento-service
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/gestrest-ms
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true
+
   kafka:
     bootstrap-servers: localhost:9092
     producer:
@@ -13,5 +29,25 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       auto-offset-reset: earliest
+
 server:
   port: 8083
+
+procpag:
+  url: ${PROCPAG_URL:http://localhost:8089}
+  timeout: 5s
+
+resilience4j:
+  retry:
+    instances:
+      pagamentoRetry:
+        maxAttempts: 3
+        waitDuration: 1s
+  circuitbreaker:
+    instances:
+      pagamentoCircuitBreaker:
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        timeoutDuration: 5s

@@ -48,6 +48,10 @@ src/main/java/br/com/gestrest/pedido/service/
 - AtualizarItemCardapioUseCase
 - ExcluirItemCardapioUseCase
 
+## 📖 Documentação da API (Swagger)
+
+Após iniciar o serviço, acesse a documentação Swagger em: [http://localhost:8083/swagger-ui.html](http://localhost:8083/swagger-ui.html)
+
 ## 🌐 Endpoints
 
 - `POST /api/v1/pedidos`

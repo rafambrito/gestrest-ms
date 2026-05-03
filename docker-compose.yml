@@ -1,21 +1,20 @@
-version: "3.9"
-
+services:
   postgres:
     image: postgres:16
     container_name: gestrest-postgres
     restart: always
     environment:
-      POSTGRES_DB: gestrest
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: gestrest-ms
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
-      - gestrest-network
+      - fase3net
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin"]
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -30,7 +29,7 @@ version: "3.9"
     ports:
       - "2181:2181"
     networks:
-      - gestrest-network
+      - fase3net
 
   kafka:
     image: confluentinc/cp-kafka:7.4.0
@@ -44,12 +43,14 @@ version: "3.9"
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:29092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_INTERNAL://0.0.0.0:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_INTERNAL://kafka:29092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
     networks:
-      - gestrest-network
+      - fase3net
 
   auth-service:
     build:
@@ -62,14 +63,15 @@ version: "3.9"
       postgres:
         condition: service_healthy
     ports:
-      - "8081:8080"
+      - "8081:8081"
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gestrest
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gestrest-ms
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      JWT_SECRET: gestrest-secret-key-for-jwt-tokens-very-long-and-secure
     networks:
-      - gestrest-network
+      - fase3net
 
   restaurante-service:
     build:
@@ -87,11 +89,12 @@ version: "3.9"
       - "8082:8080"
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gestrest
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gestrest-ms
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      JWT_SECRET: gestrest-secret-key-for-jwt-tokens-very-long-and-secure
     networks:
-      - gestrest-network
+      - fase3net
 
   pedido-service:
     build:
@@ -109,11 +112,12 @@ version: "3.9"
       - "8083:8080"
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gestrest
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gestrest-ms
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      JWT_SECRET: gestrest-secret-key-for-jwt-tokens-very-long-and-secure
     networks:
-      - gestrest-network
+      - fase3net
 
   pagamento-service:
     build:
@@ -127,20 +131,34 @@ version: "3.9"
         condition: service_healthy
       kafka:
         condition: service_started
+      procpag:
+        condition: service_started
     ports:
-      - "8084:8080"
+      - "8084:8083"
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gestrest
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gestrest-ms
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      JWT_SECRET: gestrest-secret-key-for-jwt-tokens-very-long-and-secure
     networks:
-      - gestrest-network
+      - fase3net
+
+  procpag:
+    image: docker.io/erickemprobr/procpag:latest
+    container_name: gestrest-procpag
+    platform: linux/amd64
+    restart: always
+    ports:
+      - "8089:8089"
+    networks:
+      - fase3net
 
 networks:
-  gestrest-network:
+  fase3net:
     driver: bridge
 
 volumes:
   postgres_data:
+    driver: local
+
