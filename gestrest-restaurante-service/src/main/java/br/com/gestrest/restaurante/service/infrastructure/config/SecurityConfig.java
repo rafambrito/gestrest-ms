@@ -25,6 +25,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authz -> authz
+                .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/actuator/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/v1/restaurantes/**").hasRole("DONO")
                 .requestMatchers(HttpMethod.PUT, "/api/v1/restaurantes/**").hasRole("DONO")
                 .requestMatchers(HttpMethod.DELETE, "/api/v1/restaurantes/**").hasRole("DONO")
