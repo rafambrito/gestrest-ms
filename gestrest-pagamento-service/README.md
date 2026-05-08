@@ -20,9 +20,11 @@ Pedido → Pagamento → Status
 
 ## ⚙️ Use cases principais
 - ProcessarPagamentoUseCase
+- BuscarPagamentoPorIdUseCase
 
 ## 🌐 Endpoints
 - `POST /api/v1/pagamentos`
+- `GET /api/v1/pagamentos/{id}`
 
 ## 🔄 Sequência
 1. Pedido cria registro de pagamento
