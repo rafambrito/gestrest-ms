@@ -99,6 +99,7 @@ sequenceDiagram
 - Kafka 
 - Resilience4j (Circuit Breaker, Retry)
 - Docker Compose
+- Swagger/OpenAPI
 - Maven
 
 ## ▶️ Execução

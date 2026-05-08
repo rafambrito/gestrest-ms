@@ -3,9 +3,12 @@ package br.com.gestrest.pagamento.service.infrastructure.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import br.com.gestrest.pagamento.service.adapters.in.web.mapper.ConsultarPagamentoWebMapper;
+import br.com.gestrest.pagamento.service.application.usecase.impl.pagamento.BuscarPagamentoPorIdUseCaseImpl;
 import br.com.gestrest.pagamento.service.application.usecase.impl.pagamento.ProcessarPagamentoUseCaseImpl;
-import br.com.gestrest.pagamento.service.domain.model.ports.in.pagamento.ProcessarPagamentoUseCase;
 import br.com.gestrest.pagamento.service.domain.model.ports.in.PedidoEventConsumerPort;
+import br.com.gestrest.pagamento.service.domain.model.ports.in.pagamento.BuscarPagamentoPorIdUseCase;
+import br.com.gestrest.pagamento.service.domain.model.ports.in.pagamento.ProcessarPagamentoUseCase;
 import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoEventPublisherPort;
 import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoGatewayPort;
 import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoRepositoryPort;
@@ -20,6 +23,11 @@ public class UseCaseConfig {
             PagamentoEventPublisherPort pagamentoEventPublisher) {
         return new ProcessarPagamentoUseCaseImpl(pagamentoRepository, pagamentoGateway, pagamentoEventPublisher);
     }
+
+    @Bean
+    public BuscarPagamentoPorIdUseCase buscarPagamentoPorIdUseCase(PagamentoRepositoryPort pagamentoRepositoryPort) {
+        return new BuscarPagamentoPorIdUseCaseImpl(pagamentoRepositoryPort);
+    }   
 
     @Bean
     public PedidoEventConsumerPort pedidoEventConsumerPort(

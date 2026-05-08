@@ -21,5 +21,10 @@ public class PagamentoRepositoryAdapter implements PagamentoRepositoryPort {
         var savedEntity = pagamentoJpaRepository.save(entity);
         return pagamentoPersistenceMapper.toDomain(savedEntity);
     }
+
+    @Override
+    public java.util.Optional<Pagamento> buscarPorId(Long id) {
+        return pagamentoJpaRepository.findById(id).map(pagamentoPersistenceMapper::toDomain);   
+    }
 }
 

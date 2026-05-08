@@ -9,7 +9,6 @@ br/com/gestrest/pagamento/service/domain/model/event/PagamentoAprovadoEvent.clas
 br/com/gestrest/pagamento/service/infrastructure/config/SecurityConfig.class
 br/com/gestrest/pagamento/service/adapters/out/integration/PagamentoGatewayMockAdapter.class
 br/com/gestrest/pagamento/service/domain/model/ports/in/pagamento/ProcessarPagamentoUseCase.class
-br/com/gestrest/pagamento/service/adapters/out/persistence/PagamentoRepositoryAdapter.class
 br/com/gestrest/pagamento/service/adapters/out/integration/dto/ProcpagRequisicaoRequest.class
 br/com/gestrest/pagamento/service/domain/model/ports/out/PagamentoGatewayPort.class
 br/com/gestrest/pagamento/service/domain/model/Pagamento.class

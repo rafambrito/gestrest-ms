@@ -1,0 +1,124 @@
+{
+"info": {
+"name": "GestRest MS - Testes",
+"_postman_id": "gestrest-ms-collection",
+"description": "Coleção de testes dos microserviços GestRest",
+"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+},
+"variable": [
+{ "key": "auth_url", "value": "http://localhost:8081" },
+{ "key": "restaurante_url", "value": "http://localhost:8082" },
+{ "key": "pedido_url", "value": "http://localhost:8083" },
+{ "key": "pagamento_url", "value": "http://localhost:8084" },
+{ "key": "token", "value": "" }
+],
+"item": [
+{
+"name": "Auth",
+"item": [
+{
+"name": "Login",
+"request": {
+"method": "POST",
+"header": [
+{ "key": "Content-Type", "value": "application/json" }
+],
+"url": {
+"raw": "{{auth_url}}/auth/login",
+"host": ["{{auth_url}}"],
+"path": ["auth", "login"]
+},
+"body": {
+"mode": "raw",
+"raw": "{ "login": "admin", "senha": "123456" }"
+}
+},
+"event": [
+{
+"listen": "test",
+"script": {
+"exec": [
+"var json = pm.response.json();",
+"pm.environment.set('token', json.token);"
+]
+}
+}
+]
+}
+]
+},
+{
+"name": "Pedido",
+"item": [
+{
+"name": "Criar Pedido",
+"request": {
+"method": "POST",
+"header": [
+{ "key": "Authorization", "value": "Bearer {{token}}" },
+{ "key": "Content-Type", "value": "application/json" }
+],
+"url": {
+"raw": "{{pedido_url}}/api/v1/pedidos",
+"host": ["{{pedido_url}}"],
+"path": ["api", "v1", "pedidos"]
+},
+"body": {
+"mode": "raw",
+"raw": "{ "clienteId": 1, "itens": [{ "itemId": 1, "quantidade": 2 }] }"
+}
+}
+}
+]
+},
+{
+"name": "Pagamento",
+"item": [
+{
+"name": "Criar Pagamento",
+"request": {
+"method": "POST",
+"header": [
+{ "key": "Content-Type", "value": "application/json" }
+],
+"url": {
+"raw": "{{pagamento_url}}/api/v1/pagamentos",
+"host": ["{{pagamento_url}}"],
+"path": ["api", "v1", "pagamentos"]
+},
+"body": {
+"mode": "raw",
+"raw": "{ "pedidoId": 1, "valor": 100 }"
+}
+}
+}
+]
+},
+{
+"name": "Health Check",
+"item": [
+{
+"name": "Auth Health",
+"request": {
+"method": "GET",
+"url": "{{auth_url}}/actuator/health"
+}
+},
+{
+"name": "Pedido Health",
+"request": {
+"method": "GET",
+"url": "{{pedido_url}}/actuator/health"
+}
+},
+{
+"name": "Pagamento Health",
+"request": {
+"method": "GET",
+"url": "{{pagamento_url}}/actuator/health"
+}
+}
+]
+}
+]
+}
