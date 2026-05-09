@@ -11,11 +11,12 @@ public class CriarRestauranteUseCaseImpl implements CriarRestauranteUseCase {
 
     public CriarRestauranteUseCaseImpl(RestauranteRepositoryPortWrite restauranteRepositoryWrite) {
         this.restauranteRepositoryWrite = restauranteRepositoryWrite;
+
     }
 
     @Override
     public Restaurante criar(CriarRestauranteCommand command) {
-        var restaurante = Restaurante.criar(command.nome());
+        var restaurante = Restaurante.criar(command.nome(), command.endereco(), command.tipoCozinha(), command.horarioFuncionamento(), command.donoId(), true);
         return restauranteRepositoryWrite.salvar(restaurante);
     }
 }

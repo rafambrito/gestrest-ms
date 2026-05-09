@@ -1,11 +1,13 @@
 package br.com.gestrest.restaurante.service.adapters.in.web.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record CriarRestauranteRequest(
-        @NotBlank(message = "Nome é obrigatório")
-        @Size(max = 150, message = "Nome deve ter no máximo 150 caracteres")
-        String nome
-) {
+    @NotBlank @Size(max = 150) String nome, 
+    @NotBlank @Size(max = 250) String endereco, 
+    @NotBlank @Size(max = 100) String tipoCozinha,
+    @NotBlank @Size(max = 100) String horarioFuncionamento,
+    @NotNull Long donoId) {
 }

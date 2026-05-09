@@ -13,7 +13,7 @@ public class RestaurantePersistenceMapper {
             return null;
         }
 
-        return Restaurante.existente(entity.getId(), entity.getNome(), entity.isAtivo());
+        return Restaurante.existente(entity.getId(), entity.getNome(), entity.getEndereco(), entity.getTipoCozinha(), entity.getHorarioFuncionamento(), entity.getDonoId(), entity.isAtivo());
     }
 
     public RestauranteEntity toEntity(Restaurante restaurante) {
@@ -25,6 +25,10 @@ public class RestaurantePersistenceMapper {
         entity.setId(restaurante.getId());
         entity.setNome(restaurante.getNome());
         entity.setAtivo(restaurante.isAtivo());
+        entity.setEndereco(restaurante.getEndereco());
+        entity.setTipoCozinha(restaurante.getTipoCozinha());
+        entity.setHorarioFuncionamento(restaurante.getHorarioFuncionamento());
+        entity.setDonoId(restaurante.getDonoId()); 
         return entity;
     }
 }

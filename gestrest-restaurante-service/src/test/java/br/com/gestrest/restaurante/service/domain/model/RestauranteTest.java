@@ -12,7 +12,7 @@ class RestauranteTest {
 
     @Test
     void criarSucesso() {
-        var r = Restaurante.criar("João da Silva");
+        var r = Restaurante.criar("João da Silva"   , "Rua das Flores, 123", "Brasileira", "10:00 - 22:00", 1L, true);
         assertNull(r.getId());
         assertEquals("João da Silva", r.getNome());
         assertTrue(r.isAtivo());
@@ -20,24 +20,24 @@ class RestauranteTest {
 
     @Test
     void validarCamposObrigatorios() {
-        assertThrows(IllegalArgumentException.class, () -> Restaurante.criar(null));
-        assertThrows(IllegalArgumentException.class, () -> Restaurante.criar(""));
-        assertThrows(IllegalArgumentException.class, () -> Restaurante.criar("   "));
+        assertThrows(IllegalArgumentException.class, () -> Restaurante.criar(null, "Rua das Flores, 123", "Brasileira", "10:00 - 22:00", 1L, true));
+        assertThrows(IllegalArgumentException.class, () -> Restaurante.criar("", "Rua das Flores, 123", "Brasileira", "10:00 - 22:00", 1L, true));
+        assertThrows(IllegalArgumentException.class, () -> Restaurante.criar("   ", "Rua das Flores, 123", "Brasileira", "10:00 - 22:00", 1L, true));
     }
 
     @Test
     void atualizarSucesso() {
-        var r = Restaurante.existente(3L, "José Pereira", true);
-        r.atualizar("Rafael Brito", false);
+        var r = Restaurante.existente(3L, "José Pereira", "Rua das Flores, 123", "Brasileira", "10:00 - 22:00", 1L, true);
+        r.atualizar("Rafael Brito", "Rua das Flores, 123", "Brasileira", "10:00 - 22:00", false);
         assertEquals("Rafael Brito", r.getNome());
         assertFalse(r.isAtivo());
     }
 
     @Test
     void equalsHashCode() {
-        var a = Restaurante.existente(1L, "João da Silva", true);
-        var b = Restaurante.existente(1L, "Rafael Brito", false);
-        var c = Restaurante.existente(2L, "João da Silva", true);
+        var a = Restaurante.existente(1L, "João da Silva", "Rua das Flores, 123", "Brasileira", "10:00 - 22:00", 1L, true);
+        var b = Restaurante.existente(1L, "Rafael Brito", "Rua das Flores, 123", "Brasileira", "10:00 - 22:00", 1L, false);
+        var c = Restaurante.existente(2L, "João da Silva", "Rua das Flores, 123", "Brasileira", "10:00 - 22:00", 1L, true);
 
         assertEquals(a, b);
         assertEquals(a.hashCode(), b.hashCode());

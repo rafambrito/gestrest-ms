@@ -49,7 +49,7 @@ class AtualizarItemCardapioUseCaseImplTest {
             false, 2L);
         var atualizado = ItemCardapio.existente(5L, "Sanduiche Natural Premium", "Pao integral, frango desfiado, ricota e folhas", new BigDecimal("22.50"),
             false, 2L);
-        var restaurante = Restaurante.existente(2L, "Restaurante Teste", true);
+        var restaurante = Restaurante.existente(2L, "Restaurante Bom Sabor", "Rua das Flores, 123", "Brasileira", "10:00 - 22:00", 1L, true);
 
         when(itemCardapioRepositoryRead.buscarPorId(5L)).thenReturn(Optional.of(existente));
         when(restauranteRepositoryRead.buscarPorId(2L)).thenReturn(Optional.of(restaurante));

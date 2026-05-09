@@ -32,6 +32,7 @@ public class RestauranteRepositoryAdapter implements RestauranteRepositoryPortRe
     @Override
     public Restaurante salvar(Restaurante restaurante) {
         var entity = mapper.toEntity(restaurante);
+        System.out.println("Salvando restaurante ativo: " + entity.isAtivo());
         return mapper.toDomain(repository.save(entity));
     }
 

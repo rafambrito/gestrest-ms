@@ -1,0 +1,42 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Current File",
+      "request": "launch",
+      "mainClass": "${file}"
+    },
+    {
+      "type": "java",
+      "name": "GestrestAuthServiceApplication",
+      "request": "launch",
+      "mainClass": "br.com.gestrest.auth.service.infrastructure.GestrestAuthServiceApplication",
+      "projectName": "gestrest-auth-service"
+    },
+    {
+      "type": "java",
+      "name": "GestrestPagamentoServiceApplication",
+      "request": "launch",
+      "mainClass": "br.com.gestrest.pagamento.service.infrastructure.GestrestPagamentoServiceApplication",
+      "projectName": "gestrest-pagamento-service"
+    },
+    {
+      "type": "java",
+      "name": "GestRestApiApplication",
+      "request": "launch",
+      "mainClass": "br.com.gestrest.pedido.service.infrastructure.GestRestApiApplication",
+      "projectName": "gestrest-pedido-service"
+    },
+    {
+      "type": "java",
+      "name": "GestrestRestauranteServiceApplication",
+      "request": "launch",
+      "mainClass": "br.com.gestrest.restaurante.service.infrastructure.GestrestRestauranteServiceApplication",
+      "projectName": "gestrest-restaurante-service"
+    }
+  ]
+}

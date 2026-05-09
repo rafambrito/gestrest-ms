@@ -13,14 +13,14 @@ import br.com.gestrest.restaurante.service.domain.model.Restaurante;
 public class RestauranteWebMapper {
 
     public CriarRestauranteCommand toCommand(CriarRestauranteRequest request) {
-        return new CriarRestauranteCommand(request.nome());
+        return new CriarRestauranteCommand(request.nome(), request.endereco(), request.tipoCozinha(), request.horarioFuncionamento(), request.donoId());
     }
 
     public AtualizarRestauranteCommand toCommand(AtualizarRestauranteRequest request) {
-        return new AtualizarRestauranteCommand(request.nome(), request.ativo());
+        return new AtualizarRestauranteCommand(request.nome(), request.endereco(), request.tipoCozinha(), request.horarioFuncionamento(), request.ativo());
     }
 
     public RestauranteResponse toResponse(Restaurante restaurante) {
-        return new RestauranteResponse(restaurante.getId(), restaurante.getNome(), restaurante.isAtivo());
+        return new RestauranteResponse( restaurante.getId(), restaurante.getNome(), restaurante.getEndereco(), restaurante.getTipoCozinha(), restaurante.getHorarioFuncionamento(), restaurante.isAtivo(), restaurante.getDonoId());
     }
 }

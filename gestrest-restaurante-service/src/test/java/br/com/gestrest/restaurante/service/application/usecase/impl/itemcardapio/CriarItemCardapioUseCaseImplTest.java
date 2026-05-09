@@ -49,7 +49,7 @@ class CriarItemCardapioUseCaseImplTest {
     @Test
     @DisplayName("Deve criar item com sucesso")
     void deveCriarItemComSucesso() {
-        var restaurante = Restaurante.existente(1L, "Rafael Brito", true);
+        var restaurante = Restaurante.existente(1L, "Rafael Brito", "Rua das Flores, 123", "Brasileira", "10:00 - 22:00", 1L, true);
         var command = new CriarItemCardapioCommand("Rafael Brito", "Acompanha arroz branco e fritas", new BigDecimal("39.90"), 1L);
 
         when(restauranteRepositoryRead.buscarPorId(1L)).thenReturn(Optional.of(restaurante));

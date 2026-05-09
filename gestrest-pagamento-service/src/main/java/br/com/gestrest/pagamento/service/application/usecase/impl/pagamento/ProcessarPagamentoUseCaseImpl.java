@@ -7,11 +7,10 @@ import br.com.gestrest.pagamento.service.domain.model.Pagamento;
 import br.com.gestrest.pagamento.service.domain.model.event.PagamentoAprovadoEvent;
 import br.com.gestrest.pagamento.service.domain.model.event.PagamentoPendenteEvent;
 import br.com.gestrest.pagamento.service.domain.model.event.PedidoCriadoEvent;
-import br.com.gestrest.pagamento.service.domain.model.ports.in.pagamento.ProcessarPagamentoUseCase;
 import br.com.gestrest.pagamento.service.domain.model.ports.in.PedidoEventConsumerPort;
+import br.com.gestrest.pagamento.service.domain.model.ports.in.pagamento.ProcessarPagamentoUseCase;
 import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoEventPublisherPort;
 import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoGatewayPort;
-import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoGatewayResponse;
 import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoRepositoryPort;
 
 public class ProcessarPagamentoUseCaseImpl implements ProcessarPagamentoUseCase, PedidoEventConsumerPort {

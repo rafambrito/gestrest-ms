@@ -24,7 +24,13 @@ public class AtualizarRestauranteUseCaseImpl implements AtualizarRestauranteUseC
         var restaurante = restauranteRepositoryRead.buscarPorId(id)
                 .orElseThrow(() -> new RestauranteNaoEncontradoException(id));
 
-        restaurante.atualizar(command.nome(), command.ativo());
+        restaurante.atualizar(
+                command.nome(),
+                command.endereco(),
+                command.tipoCozinha(),
+                command.horarioFuncionamento(),
+                command.ativo()
+        );
         return restauranteRepositoryWrite.salvar(restaurante);
     }
 }

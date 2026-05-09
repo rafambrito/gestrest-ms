@@ -31,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RestauranteController implements RestauranteControllerDoc {
 
+   
     private final CriarRestauranteUseCase criarUseCase;
     private final BuscarRestaurantePorIdUseCase buscarPorIdUseCase;
     private final ListarRestaurantesUseCase listarUseCase;
@@ -48,8 +49,8 @@ public class RestauranteController implements RestauranteControllerDoc {
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<RestauranteResponse> buscarPorId(@PathVariable Long id) {
-        var restaurante = buscarPorIdUseCase.buscar(id);
+    public ResponseEntity<RestauranteResponse> buscar(@PathVariable Long id) {
+        var restaurante = buscarPorIdUseCase.buscar(id);   
         return ResponseEntity.ok(mapper.toResponse(restaurante));
     }
 
@@ -71,7 +72,7 @@ public class RestauranteController implements RestauranteControllerDoc {
 
     @Override
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         excluirUseCase.excluir(id);
         return ResponseEntity.noContent().build();
     }
