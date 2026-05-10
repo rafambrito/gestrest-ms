@@ -44,11 +44,9 @@ class AtualizarItemCardapioUseCaseImplTest {
     @Test
     @DisplayName("Deve atualizar item com restaurante válido")
     void atualizarSucesso() {
-        var existente = ItemCardapio.existente(5L, "Sanduiche Natural", "Pao integral com frango desfiado e salada", new BigDecimal("18.00"), true, 2L);
-        var command = new AtualizarItemCardapioCommand("Sanduiche Natural Premium", "Pao integral, frango desfiado, ricota e folhas", new BigDecimal("22.50"),
-            false, 2L);
-        var atualizado = ItemCardapio.existente(5L, "Sanduiche Natural Premium", "Pao integral, frango desfiado, ricota e folhas", new BigDecimal("22.50"),
-            false, 2L);
+        var existente = ItemCardapio.existente(5L, "Sanduiche Natural", "Pao integral com frango desfiado e salada", new BigDecimal("18.00"), true, true, 2L, "c:/foto.jpg"   );
+        var command = new AtualizarItemCardapioCommand("Sanduiche Natural Premium", "Pao integral, frango desfiado, ricota e folhas", new BigDecimal("22.50"), false, false, 2L);
+        var atualizado = ItemCardapio.existente(5L, "Sanduiche Natural Premium", "Pao integral, frango desfiado, ricota e folhas", new BigDecimal("22.50"), false, true, 2L, "c:/foto.jpg"   );
         var restaurante = Restaurante.existente(2L, "Restaurante Bom Sabor", "Rua das Flores, 123", "Brasileira", "10:00 - 22:00", 1L, true);
 
         when(itemCardapioRepositoryRead.buscarPorId(5L)).thenReturn(Optional.of(existente));
@@ -65,7 +63,7 @@ class AtualizarItemCardapioUseCaseImplTest {
     @DisplayName("Deve falhar quando item não existir")
     void atualizarNaoEncontrado() {
         var command = new AtualizarItemCardapioCommand("Sanduiche Natural Premium", "Pao integral, frango desfiado, ricota e folhas", new BigDecimal("22.50"),
-                false, 2L);
+                false, false, 2L);
 
         when(itemCardapioRepositoryRead.buscarPorId(55L)).thenReturn(Optional.empty());
 
@@ -75,9 +73,9 @@ class AtualizarItemCardapioUseCaseImplTest {
     @Test
     @DisplayName("Deve falhar quando restaurante não existir")
     void atualizarComRestauranteInexistente() {
-        var existente = ItemCardapio.existente(5L, "Sanduiche Natural", "Pao integral com frango desfiado e salada", new BigDecimal("18.00"), true, 2L);
+        var existente = ItemCardapio.existente(5L, "Sanduiche Natural", "Pao integral com frango desfiado e salada", new BigDecimal("18.00"), true, true, 2L, "c:/foto.jpg"   );
         var command = new AtualizarItemCardapioCommand("Sanduiche Natural Premium", "Pao integral, frango desfiado, ricota e folhas", new BigDecimal("22.50"),
-            false, 999L);
+                false, false, 999L);
 
         when(itemCardapioRepositoryRead.buscarPorId(5L)).thenReturn(Optional.of(existente));
         when(restauranteRepositoryRead.buscarPorId(999L)).thenReturn(Optional.empty());

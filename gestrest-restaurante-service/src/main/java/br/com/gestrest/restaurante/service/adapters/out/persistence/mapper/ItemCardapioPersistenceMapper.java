@@ -20,7 +20,9 @@ public class ItemCardapioPersistenceMapper {
                 entity.getDescricao(),
                 entity.getPreco(),
                 entity.isAtivo(),
-                entity.getRestaurante().getId());
+                entity.isDisponivelSomenteNoLocal(),
+                entity.getRestauranteId(),
+                entity.getFotoPath());
     }
 
     public ItemCardapioEntity toEntity(ItemCardapio itemCardapio) {
@@ -34,10 +36,9 @@ public class ItemCardapioPersistenceMapper {
         entity.setDescricao(itemCardapio.getDescricao());
         entity.setPreco(itemCardapio.getPreco());
         entity.setAtivo(itemCardapio.isAtivo());
-
-        var restaurante = new RestauranteEntity();
-        restaurante.setId(itemCardapio.getRestauranteId());
-        entity.setRestaurante(restaurante);
+        entity.setDisponivelSomenteNoLocal(itemCardapio.isDisponivelSomenteNoLocal());
+        entity.setFotoPath(itemCardapio.getFotoPath());
+        entity.setRestauranteId(itemCardapio.getRestauranteId());
 
         return entity;
     }

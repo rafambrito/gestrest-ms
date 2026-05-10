@@ -31,7 +31,9 @@ public class CriarItemCardapioUseCaseImpl implements CriarItemCardapioUseCase {
                 command.nome(),
                 command.descricao(),
                 command.preco(),
-                restauranteId);
+                restauranteId,
+                command.disponivelSomenteNoLocal(),
+                command.fotoPath());
 
         return itemCardapioRepositoryWrite.salvar(item);
     }

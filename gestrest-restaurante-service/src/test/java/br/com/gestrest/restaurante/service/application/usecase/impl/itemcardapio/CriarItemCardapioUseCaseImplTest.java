@@ -39,7 +39,7 @@ class CriarItemCardapioUseCaseImplTest {
     @Test
     @DisplayName("Deve falhar quando restaurante não existir")
     void deveFalharQuandoRestauranteNaoExistir() {
-        var command = new CriarItemCardapioCommand("Pizza", "Deliciosa", new BigDecimal("45.50"), 999L);
+        var command = new CriarItemCardapioCommand("Lanche Natural", "Pao brioche, queijo prato", new BigDecimal("39.90"), 999L, true, "c:/foto.jpg"  );
 
         when(restauranteRepositoryRead.buscarPorId(999L)).thenReturn(Optional.empty());
 
@@ -50,14 +50,14 @@ class CriarItemCardapioUseCaseImplTest {
     @DisplayName("Deve criar item com sucesso")
     void deveCriarItemComSucesso() {
         var restaurante = Restaurante.existente(1L, "Rafael Brito", "Rua das Flores, 123", "Brasileira", "10:00 - 22:00", 1L, true);
-        var command = new CriarItemCardapioCommand("Rafael Brito", "Acompanha arroz branco e fritas", new BigDecimal("39.90"), 1L);
+        var command = new CriarItemCardapioCommand("Lanche Natural", "Pao brioche, queijo prato", new BigDecimal("39.90"), 1L, true, "c:/foto.jpg"  );
 
         when(restauranteRepositoryRead.buscarPorId(1L)).thenReturn(Optional.of(restaurante));
         when(itemCardapioRepositoryWrite.salvar(any(ItemCardapio.class))).thenAnswer(inv -> inv.getArgument(0));
 
         var criado = useCase.criar(command);
 
-        assertEquals("Rafael Brito", criado.getNome());
+        assertEquals("Lanche Natural", criado.getNome());
         assertEquals(0, criado.getPreco().compareTo(new BigDecimal("39.90")));
     }
 }

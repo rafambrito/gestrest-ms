@@ -7,5 +7,6 @@ public record AtualizarItemCardapioCommand(
         String descricao,
         BigDecimal preco,
         boolean ativo,
+        boolean disponivelSomenteNoLocal,
         Long restauranteId) {
 }

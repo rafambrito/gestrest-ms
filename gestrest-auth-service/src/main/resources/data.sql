@@ -1,15 +1,15 @@
 INSERT INTO tipo_usuario (nome_tipo)
-SELECT 'Dono de Restaurante'
+SELECT 'DONO'
 WHERE NOT EXISTS (
     SELECT 1
     FROM tipo_usuario
-    WHERE nome_tipo = 'Dono de Restaurante'
+    WHERE nome_tipo = 'DONO'
 );
 
 INSERT INTO tipo_usuario (nome_tipo)
-SELECT 'Cliente'
+SELECT 'CLIENTE'
 WHERE NOT EXISTS (
     SELECT 1
     FROM tipo_usuario
-    WHERE nome_tipo = 'Cliente'
+    WHERE nome_tipo = 'CLIENTE'
 );

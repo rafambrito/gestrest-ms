@@ -20,6 +20,8 @@ public record AtualizarItemCardapioRequest(
         @NotNull(message = "Ativo é obrigatório")
         boolean ativo,
         @NotNull(message = "Restaurante é obrigatório")
-        Long restauranteId
+        Long restauranteId,
+        @NotNull(message = "Disponível somente no local é obrigatório")
+        boolean disponivelSomenteNoLocal
 ) {
 }

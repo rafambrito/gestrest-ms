@@ -27,7 +27,7 @@ public interface ItemCardapioControllerDoc {
             @ApiResponse(responseCode = "404", description = "Restaurante nao encontrado")
     })
     ResponseEntity<ItemCardapioResponse> criar(
-            @Valid @RequestBody(description = "Dados do item", required = true, content = @Content(mediaType = "application/json", schema = @Schema(implementation = CriarItemCardapioRequest.class), examples = @ExampleObject(value = "{\"nome\":\"Pizza Marguerita\",\"descricao\":\"Pizza com mussarela e manjericao\",\"preco\":49.90,\"restauranteId\":1}"))) CriarItemCardapioRequest request);
+            @Valid @RequestBody(description = "Dados do item", required = true, content = @Content(mediaType = "application/json", schema = @Schema(implementation = CriarItemCardapioRequest.class), examples = @ExampleObject(value = "{\"nome\":\"Pizza Marguerita\",\"descricao\":\"Pizza com mussarela e manjericao\",\"preco\":49.90,\"restauranteId\":1,\"disponivelSomenteNoLocal\":false,\"fotoPath\":\"/fotos/pizza_marguerita.jpg\"}"))) CriarItemCardapioRequest request);
 
     @Operation(summary = "Buscar item por id", description = "Busca um item de cardapio pelo identificador")
     @ApiResponses(value = {

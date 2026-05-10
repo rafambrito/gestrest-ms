@@ -1,15 +1,13 @@
 package br.com.gestrest.restaurante.service.adapters.out.persistence.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,13 +28,20 @@ public class ItemCardapioEntity {
     @Column(nullable = false, length = 500)
     private String descricao;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal preco;
+
+    @Column(name = "restaurante_id", nullable = false)
+    private Long restauranteId;
 
     @Column(nullable = false)
     private boolean ativo;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "restaurante_id", nullable = false)
-    private RestauranteEntity restaurante;
+    @Column(name = "disponivel_somente_no_local", nullable = false)
+    private boolean disponivelSomenteNoLocal;
+
+    @Column(name = "foto_path", nullable = false, length = 255)
+    private String fotoPath;
+
+    private LocalDateTime dataUltimaAlteracao;
 }

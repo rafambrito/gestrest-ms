@@ -18,6 +18,10 @@ public record CriarItemCardapioRequest(
         @DecimalMin(value = "0.01", message = "Preço deve ser maior que zero")
         BigDecimal preco,
         @NotNull(message = "Restaurante é obrigatório")
-        Long restauranteId
+        Long restauranteId,
+        boolean disponivelSomenteNoLocal,       
+        @NotBlank(message = "Caminho da foto é obrigatório")    
+        @Size(max = 255, message = "Caminho da foto deve ter no máximo 255 caracteres")
+        String fotoPath
 ) {
 }

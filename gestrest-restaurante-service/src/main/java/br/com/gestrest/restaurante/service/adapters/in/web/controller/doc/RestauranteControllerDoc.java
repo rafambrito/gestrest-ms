@@ -51,6 +51,11 @@ public interface RestauranteControllerDoc {
             responseCode = "409",
             description = "Conflito - restaurante já existe ou dono inválido"
         )
+        ,
+        @ApiResponse(
+            responseCode = "403",
+            description = "Usuário não autorizado a criar restaurante"
+        )
     })
     ResponseEntity<RestauranteResponse> criar(
         @Valid @RequestBody(

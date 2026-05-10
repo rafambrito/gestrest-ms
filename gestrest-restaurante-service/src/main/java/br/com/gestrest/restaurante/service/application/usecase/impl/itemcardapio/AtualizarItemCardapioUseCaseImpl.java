@@ -34,7 +34,13 @@ public class AtualizarItemCardapioUseCaseImpl implements AtualizarItemCardapioUs
             throw new RestauranteNaoEncontradoException(restauranteId);
         }
 
-        item.atualizar(command.nome(), command.descricao(), command.preco(), command.ativo(), restauranteId);
+        item.atualizar(
+                command.nome(),
+                command.descricao(),
+                command.preco(),
+                command.ativo(),
+                command.disponivelSomenteNoLocal(),
+                command.restauranteId());
         return itemCardapioRepositoryWrite.salvar(item);
     }
 }

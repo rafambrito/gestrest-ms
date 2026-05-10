@@ -2,5 +2,5 @@ package br.com.gestrest.restaurante.service.application.usecase.command.itemcard
 
 import java.math.BigDecimal;
 
-public record CriarItemCardapioCommand(String nome, String descricao, BigDecimal preco, Long restauranteId) {
+public record CriarItemCardapioCommand(String nome, String descricao, BigDecimal preco, Long restauranteId, boolean disponivelSomenteNoLocal, String fotoPath) {
 }

@@ -17,7 +17,9 @@ public class ItemCardapioWebMapper {
                 request.nome(),
                 request.descricao(),
                 request.preco(),
-                request.restauranteId());
+                request.restauranteId(),
+                request.disponivelSomenteNoLocal(),
+                request.fotoPath());
     }
 
     public AtualizarItemCardapioCommand toCommand(AtualizarItemCardapioRequest request) {
@@ -26,6 +28,7 @@ public class ItemCardapioWebMapper {
                 request.descricao(),
                 request.preco(),
                 request.ativo(),
+                request.disponivelSomenteNoLocal(),
                 request.restauranteId());
     }
 
@@ -36,6 +39,7 @@ public class ItemCardapioWebMapper {
                 itemCardapio.getDescricao(),
                 itemCardapio.getPreco(),
                 itemCardapio.isAtivo(),
+                itemCardapio.isDisponivelSomenteNoLocal(),
                 itemCardapio.getRestauranteId());
     }
 }
