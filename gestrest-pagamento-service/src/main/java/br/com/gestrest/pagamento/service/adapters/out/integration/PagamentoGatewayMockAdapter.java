@@ -15,7 +15,7 @@ public class PagamentoGatewayMockAdapter implements PagamentoGatewayPort {
     private final PoliticaResilienciaPagamento politica;
 
     @Override
-    public PagamentoGatewayResponse iniciarPagamento(Long pagamentoId, Long clienteId, BigDecimal valor) {
+    public PagamentoGatewayResponse iniciarPagamento(Long pagamentoId, Long pedidoId, Long clienteId, BigDecimal valor) {
         int tentativas = 0;
         while (tentativas < politica.getMaxTentativas()) {
             tentativas++;

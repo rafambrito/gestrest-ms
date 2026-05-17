@@ -29,6 +29,8 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       auto-offset-reset: earliest
+    listener:
+      missing-topics-fatal: false
 
 server:
   port: 8083
@@ -40,14 +42,18 @@ procpag:
 resilience4j:
   retry:
     instances:
-      pagamentoRetry:
+      pagamentoService:
         maxAttempts: 3
         waitDuration: 1s
   circuitbreaker:
     instances:
-      pagamentoCircuitBreaker:
+      pagamentoService:
         failureRateThreshold: 50
         waitDurationInOpenState: 10s
         permittedNumberOfCallsInHalfOpenState: 3
         slidingWindowSize: 10
+        minimumNumberOfCalls: 3
+  timelimiter:
+    instances:
+      pagamentoService:
         timeoutDuration: 5s

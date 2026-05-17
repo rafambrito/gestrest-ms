@@ -29,8 +29,7 @@ public class PagamentoController implements PagamentoControllerDoc {
     @Override
     @PostMapping
     public ResponseEntity<PagamentoResponse> processar(@Valid @RequestBody ProcessarPagamentoRequest request) {
-        var pagamento = processarPagamentoUseCase
-                .processar(new ProcessarPagamentoCommand(request.pedidoId(), request.usuarioId(), request.valor()));
+        var pagamento = processarPagamentoUseCase.processar(new ProcessarPagamentoCommand(request.pedidoId(), request.usuarioId(), request.valor()));
         return ResponseEntity.ok(mapper.toResponse(pagamento));
     }   
 

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserDetailsImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">gestrest-pagamento-service</a> &gt; <a href="index.source.html" class="el_package">br.com.gestrest.pagamento.service.adapters.out.persistence</a> &gt; <span class="el_source">UserDetailsImpl.java</span></div><h1>UserDetailsImpl.java</h1><pre class="source lang-java linenums">package br.com.gestrest.pagamento.service.adapters.out.persistence;
+
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+public class UserDetailsImpl implements UserDetails {
+
+    private final Long userId;
+    private final String username;
+    private final String tipoUsuario;
+
+<span class="fc" id="L16">    public UserDetailsImpl(Long userId, String username, String tipoUsuario) {</span>
+<span class="fc" id="L17">        this.userId = userId;</span>
+<span class="fc" id="L18">        this.username = username;</span>
+<span class="fc" id="L19">        this.tipoUsuario = tipoUsuario;</span>
+<span class="fc" id="L20">    }</span>
+
+    @Override
+    public Collection&lt;? extends GrantedAuthority&gt; getAuthorities() {
+<span class="fc" id="L24">        return List.of(new SimpleGrantedAuthority(mapTipoUsuarioToRole(tipoUsuario)));</span>
+    }
+
+    private String mapTipoUsuarioToRole(String tipoUsuario) {
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        if (&quot;ADMIN&quot;.equals(tipoUsuario)) {</span>
+<span class="fc" id="L29">            return &quot;ROLE_ADMIN&quot;;</span>
+        }
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">        if (&quot;CLIENTE&quot;.equals(tipoUsuario)) {</span>
+<span class="fc" id="L32">            return &quot;ROLE_CLIENTE&quot;;</span>
+        }
+<span class="nc" id="L34">        return &quot;ROLE_USER&quot;;</span>
+    }
+
+    @Override
+    public String getPassword() {
+<span class="nc" id="L39">        return &quot;&quot;;</span>
+    }
+
+    @Override
+    public String getUsername() {
+<span class="nc" id="L44">        return username;</span>
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+<span class="nc" id="L49">        return true;</span>
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+<span class="nc" id="L54">        return true;</span>
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+<span class="nc" id="L59">        return true;</span>
+    }
+
+    @Override
+    public boolean isEnabled() {
+<span class="nc" id="L64">        return true;</span>
+    }
+
+    public Long getUserId() {
+<span class="nc" id="L68">        return userId;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,1 +1,4 @@
+/home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/test/java/br/com/gestrest/pagamento/service/adapters/in/event/PedidoEventConsumerTest.java
+/home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/test/java/br/com/gestrest/pagamento/service/adapters/out/integration/PaymentGatewayAdapterTest.java
+/home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/test/java/br/com/gestrest/pagamento/service/adapters/out/persistence/UserDetailsImplTest.java
 /home/rafael/git/gestrest-ms/gestrest-pagamento-service/src/test/java/br/com/gestrest/pagamento/service/application/usecase/impl/pagamento/ProcessarPagamentoUseCaseImplTest.java

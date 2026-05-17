@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KafkaEventPublisherAdapter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">gestrest-pagamento-service</a> &gt; <a href="index.source.html" class="el_package">br.com.gestrest.pagamento.service.adapters.out.event</a> &gt; <span class="el_source">KafkaEventPublisherAdapter.java</span></div><h1>KafkaEventPublisherAdapter.java</h1><pre class="source lang-java linenums">package br.com.gestrest.pagamento.service.adapters.out.event;
+
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import br.com.gestrest.pagamento.service.domain.model.event.PagamentoAprovadoEvent;
+import br.com.gestrest.pagamento.service.domain.model.event.PagamentoPendenteEvent;
+import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoEventPublisherPort;
+import br.com.gestrest.pagamento.service.infrastructure.config.KafkaTopics;
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+<span class="nc" id="L15">@Slf4j</span>
+public class KafkaEventPublisherAdapter implements PagamentoEventPublisherPort {
+
+    private final KafkaTemplate&lt;String, String&gt; kafkaTemplate;
+    private final ObjectMapper objectMapper;
+
+<span class="nc" id="L21">    public KafkaEventPublisherAdapter(KafkaTemplate&lt;String, String&gt; kafkaTemplate, ObjectMapper objectMapper) {</span>
+<span class="nc" id="L22">        this.kafkaTemplate = kafkaTemplate;</span>
+<span class="nc" id="L23">        this.objectMapper = objectMapper;</span>
+<span class="nc" id="L24">    }</span>
+
+    @Override
+    public void publicarAprovado(PagamentoAprovadoEvent event) {
+        try {
+<span class="nc" id="L29">            String message = java.util.Objects.requireNonNull(objectMapper.writeValueAsString(event));</span>
+<span class="nc" id="L30">            String key = java.util.Objects.requireNonNull(String.valueOf(event.pedidoId()));</span>
+<span class="nc" id="L31">            kafkaTemplate.send(KafkaTopics.PAGAMENTO_APROVADO, key, message).get();</span>
+<span class="nc" id="L32">            log.info(&quot;Evento pagamento.aprovado enviado. pedidoId={}&quot;, event.pedidoId());</span>
+<span class="nc" id="L33">        } catch (InterruptedException ex) {</span>
+<span class="nc" id="L34">            Thread.currentThread().interrupt();</span>
+<span class="nc" id="L35">            throw new RuntimeException(&quot;Publicacao do evento pagamento.aprovado foi interrompida&quot;, ex);</span>
+<span class="nc" id="L36">        } catch (Exception ex) {</span>
+<span class="nc" id="L37">            throw new RuntimeException(&quot;Falha ao publicar evento pagamento.aprovado. pedidoId=&quot; + event.pedidoId(), ex);</span>
+        }
+<span class="nc" id="L39">    }</span>
+
+    @Override
+    public void publicarPendente(PagamentoPendenteEvent event) {
+        try {
+<span class="nc" id="L44">            String message = java.util.Objects.requireNonNull(objectMapper.writeValueAsString(event));</span>
+<span class="nc" id="L45">            String key = java.util.Objects.requireNonNull(String.valueOf(event.pedidoId()));</span>
+<span class="nc" id="L46">            kafkaTemplate.send(KafkaTopics.PAGAMENTO_PENDENTE, key, message).get();</span>
+<span class="nc" id="L47">            log.info(&quot;Evento pagamento.pendente enviado. pedidoId={}&quot;, event.pedidoId());</span>
+<span class="nc" id="L48">        } catch (InterruptedException ex) {</span>
+<span class="nc" id="L49">            Thread.currentThread().interrupt();</span>
+<span class="nc" id="L50">            throw new RuntimeException(&quot;Publicacao do evento pagamento.pendente foi interrompida&quot;, ex);</span>
+<span class="nc" id="L51">        } catch (Exception ex) {</span>
+<span class="nc" id="L52">            throw new RuntimeException(&quot;Falha ao publicar evento pagamento.pendente. pedidoId=&quot; + event.pedidoId(), ex);</span>
+        }
+<span class="nc" id="L54">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

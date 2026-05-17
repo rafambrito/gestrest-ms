@@ -25,8 +25,8 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     private String mapTipoUsuarioToRole(String tipoUsuario) {
-        if ("DONO_RESTAURANTE".equals(tipoUsuario) || "DONO".equals(tipoUsuario)) {
-            return "ROLE_DONO";
+        if ("ADMIN".equals(tipoUsuario)) {
+            return "ROLE_ADMIN";
         }
         if ("CLIENTE".equals(tipoUsuario)) {
             return "ROLE_CLIENTE";

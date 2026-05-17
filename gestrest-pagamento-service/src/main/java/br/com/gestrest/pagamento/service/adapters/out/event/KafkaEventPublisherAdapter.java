@@ -8,12 +8,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.gestrest.pagamento.service.domain.model.event.PagamentoAprovadoEvent;
 import br.com.gestrest.pagamento.service.domain.model.event.PagamentoPendenteEvent;
 import br.com.gestrest.pagamento.service.domain.model.ports.out.PagamentoEventPublisherPort;
+import br.com.gestrest.pagamento.service.infrastructure.config.KafkaTopics;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class KafkaEventPublisherAdapter implements PagamentoEventPublisherPort {
-
-    private static final String TOPIC_PAGAMENTO_APROVADO = "pagamento.aprovado";
-    private static final String TOPIC_PAGAMENTO_PENDENTE = "pagamento.pendente";
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
@@ -26,20 +26,30 @@ public class KafkaEventPublisherAdapter implements PagamentoEventPublisherPort {
     @Override
     public void publicarAprovado(PagamentoAprovadoEvent event) {
         try {
-            String message = objectMapper.writeValueAsString(event);
-            kafkaTemplate.send(TOPIC_PAGAMENTO_APROVADO, event.pedidoId().toString(), message);
-        } catch (Exception e) {
-            System.err.println("Falha ao publicar evento PagamentoAprovado: " + e.getMessage());
+            String message = java.util.Objects.requireNonNull(objectMapper.writeValueAsString(event));
+            String key = java.util.Objects.requireNonNull(String.valueOf(event.pedidoId()));
+            kafkaTemplate.send(KafkaTopics.PAGAMENTO_APROVADO, key, message).get();
+            log.info("Evento pagamento.aprovado enviado. pedidoId={}", event.pedidoId());
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Publicacao do evento pagamento.aprovado foi interrompida", ex);
+        } catch (Exception ex) {
+            throw new RuntimeException("Falha ao publicar evento pagamento.aprovado. pedidoId=" + event.pedidoId(), ex);
         }
     }
 
     @Override
     public void publicarPendente(PagamentoPendenteEvent event) {
         try {
-            String message = objectMapper.writeValueAsString(event);
-            kafkaTemplate.send(TOPIC_PAGAMENTO_PENDENTE, event.pedidoId().toString(), message);
-        } catch (Exception e) {
-            System.err.println("Falha ao publicar evento PagamentoPendente: " + e.getMessage());
+            String message = java.util.Objects.requireNonNull(objectMapper.writeValueAsString(event));
+            String key = java.util.Objects.requireNonNull(String.valueOf(event.pedidoId()));
+            kafkaTemplate.send(KafkaTopics.PAGAMENTO_PENDENTE, key, message).get();
+            log.info("Evento pagamento.pendente enviado. pedidoId={}", event.pedidoId());
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Publicacao do evento pagamento.pendente foi interrompida", ex);
+        } catch (Exception ex) {
+            throw new RuntimeException("Falha ao publicar evento pagamento.pendente. pedidoId=" + event.pedidoId(), ex);
         }
     }
 }

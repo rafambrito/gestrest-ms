@@ -67,9 +67,8 @@ class ProcessarPagamentoUseCaseImplTest {
     @Test
     void deveAprovarPagamentoQuandoGatewayRetornaSucesso() {
         var command = new ProcessarPagamentoCommand(1L, 1L, BigDecimal.valueOf(100));
-        when(pagamentoGateway.iniciarPagamento(anyLong(), anyLong(), any(BigDecimal.class)))
+        when(pagamentoGateway.iniciarPagamento(anyLong(), anyLong(), anyLong(), any(BigDecimal.class)))
             .thenReturn(new PagamentoGatewayResponse("ext-123", "sucesso"));
-        when(pagamentoGateway.consultarStatus("ext-123")).thenReturn("sucesso");
 
         var resultado = useCase.processar(command);
 
@@ -82,7 +81,7 @@ class ProcessarPagamentoUseCaseImplTest {
     @Test
     void deveMarcarComoPendenteQuandoGatewayRetornaFalha() {
         var command = new ProcessarPagamentoCommand(1L, 1L, BigDecimal.valueOf(100));
-        when(pagamentoGateway.iniciarPagamento(anyLong(), anyLong(), any(BigDecimal.class)))
+        when(pagamentoGateway.iniciarPagamento(anyLong(), anyLong(), anyLong(), any(BigDecimal.class)))
             .thenReturn(new PagamentoGatewayResponse("ext-456", "falha"));
         when(pagamentoGateway.consultarStatus("ext-456")).thenReturn("falha");
 
@@ -97,7 +96,7 @@ class ProcessarPagamentoUseCaseImplTest {
     @Test
     void deveMarcarComoPendenteQuandoGatewayLançaExcecao() {
         var command = new ProcessarPagamentoCommand(1L, 1L, BigDecimal.valueOf(100));
-        when(pagamentoGateway.iniciarPagamento(anyLong(), anyLong(), any(BigDecimal.class)))
+        when(pagamentoGateway.iniciarPagamento(anyLong(), anyLong(), anyLong(), any(BigDecimal.class)))
             .thenThrow(new RuntimeException("Erro na chamada ao gateway"));
 
         var resultado = useCase.processar(command);

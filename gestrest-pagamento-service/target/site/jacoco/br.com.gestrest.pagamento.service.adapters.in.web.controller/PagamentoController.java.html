@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PagamentoController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">gestrest-pagamento-service</a> &gt; <a href="index.source.html" class="el_package">br.com.gestrest.pagamento.service.adapters.in.web.controller</a> &gt; <span class="el_source">PagamentoController.java</span></div><h1>PagamentoController.java</h1><pre class="source lang-java linenums">package br.com.gestrest.pagamento.service.adapters.in.web.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.gestrest.pagamento.service.adapters.in.web.controller.doc.PagamentoControllerDoc;
+import br.com.gestrest.pagamento.service.adapters.in.web.dto.request.ProcessarPagamentoRequest;
+import br.com.gestrest.pagamento.service.adapters.in.web.dto.response.PagamentoResponse;
+import br.com.gestrest.pagamento.service.adapters.in.web.mapper.ConsultarPagamentoWebMapper;
+import br.com.gestrest.pagamento.service.application.usecase.command.pagamento.ProcessarPagamentoCommand;
+import br.com.gestrest.pagamento.service.domain.model.ports.in.pagamento.BuscarPagamentoPorIdUseCase;
+import br.com.gestrest.pagamento.service.domain.model.ports.in.pagamento.ProcessarPagamentoUseCase;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping(&quot;/api/v1/pagamentos&quot;)
+@RequiredArgsConstructor
+public class PagamentoController implements PagamentoControllerDoc {
+
+    private final ProcessarPagamentoUseCase processarPagamentoUseCase;
+    private final BuscarPagamentoPorIdUseCase buscarPagamentoPorIdUseCase;
+    private final ConsultarPagamentoWebMapper mapper;
+
+    @Override
+    @PostMapping
+    public ResponseEntity&lt;PagamentoResponse&gt; processar(@Valid @RequestBody ProcessarPagamentoRequest request) {
+<span class="nc" id="L32">        var pagamento = processarPagamentoUseCase.processar(new ProcessarPagamentoCommand(request.pedidoId(), request.usuarioId(), request.valor()));</span>
+<span class="nc" id="L33">        return ResponseEntity.ok(mapper.toResponse(pagamento));</span>
+    }   
+
+    @Override
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;PagamentoResponse&gt; buscarPorId(Long id) {
+<span class="nc" id="L39">        var pagamento = buscarPagamentoPorIdUseCase.buscarPorId(id);</span>
+<span class="nc" id="L40">        return ResponseEntity.ok(mapper.toResponse(pagamento));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

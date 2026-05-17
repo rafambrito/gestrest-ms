@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Pagamento.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">gestrest-pagamento-service</a> &gt; <a href="index.source.html" class="el_package">br.com.gestrest.pagamento.service.domain.model</a> &gt; <span class="el_source">Pagamento.java</span></div><h1>Pagamento.java</h1><pre class="source lang-java linenums">package br.com.gestrest.pagamento.service.domain.model;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+public class Pagamento {
+
+    private Long id;
+    private Long pedidoId;
+    private Long usuarioId;
+    private BigDecimal valor;
+    private PagamentoStatusEnum status;
+    private LocalDateTime dataCriacao;
+
+    private String pagamentoIdExterno;
+
+<span class="fc" id="L17">    private Pagamento(Long id, Long pedidoId, Long usuarioId, BigDecimal valor, PagamentoStatusEnum status, String pagamentoIdExterno, LocalDateTime dataCriacao) {</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">        if (pedidoId == null) throw new IllegalArgumentException(&quot;Pedido e obrigatorio&quot;);</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">        if (usuarioId == null) throw new IllegalArgumentException(&quot;Usuario e obrigatorio&quot;);</span>
+<span class="pc bpc" id="L20" title="1 of 4 branches missed.">        if (valor == null || valor.compareTo(BigDecimal.ZERO) &lt;= 0) throw new IllegalArgumentException(&quot;Valor invalido&quot;);</span>
+<span class="fc" id="L21">        this.id = id;</span>
+<span class="fc" id="L22">        this.pedidoId = pedidoId;</span>
+<span class="fc" id="L23">        this.usuarioId = usuarioId;</span>
+<span class="fc" id="L24">        this.valor = valor;</span>
+<span class="fc" id="L25">        this.status = status;</span>
+<span class="fc" id="L26">        this.pagamentoIdExterno = pagamentoIdExterno;</span>
+<span class="fc" id="L27">        this.dataCriacao = dataCriacao;</span>
+<span class="fc" id="L28">    }</span>
+
+    public static Pagamento criar(Long pedidoId, Long usuarioId, BigDecimal valor) {
+<span class="fc" id="L31">        return new Pagamento(null, pedidoId, usuarioId, valor, PagamentoStatusEnum.PENDENTE, null, LocalDateTime.now());</span>
+    }
+
+    public static Pagamento existente(Long id, Long pedidoId, Long usuarioId, BigDecimal valor, PagamentoStatusEnum status, String pagamentoIdExterno, LocalDateTime dataCriacao) {
+<span class="fc" id="L35">        return new Pagamento(id, pedidoId, usuarioId, valor, status, pagamentoIdExterno, dataCriacao);</span>
+    }
+
+<span class="fc" id="L38">    public void aprovar() { this.status = PagamentoStatusEnum.APROVADO; }</span>
+<span class="fc" id="L39">    public void marcarPendente() { this.status = PagamentoStatusEnum.PENDENTE; }</span>
+<span class="fc" id="L40">    public void associarPagamentoExterno(String pagamentoIdExterno) { this.pagamentoIdExterno = pagamentoIdExterno; }</span>
+
+<span class="fc" id="L42">    public Long getId() { return id; }</span>
+<span class="fc" id="L43">    public Long getPedidoId() { return pedidoId; }</span>
+<span class="fc" id="L44">    public Long getUsuarioId() { return usuarioId; }</span>
+<span class="fc" id="L45">    public BigDecimal getValor() { return valor; }</span>
+<span class="fc" id="L46">    public PagamentoStatusEnum getStatus() { return status; }</span>
+<span class="fc" id="L47">    public String getPagamentoIdExterno() { return pagamentoIdExterno; }</span>
+<span class="fc" id="L48">    public LocalDateTime getDataCriacao() { return dataCriacao; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

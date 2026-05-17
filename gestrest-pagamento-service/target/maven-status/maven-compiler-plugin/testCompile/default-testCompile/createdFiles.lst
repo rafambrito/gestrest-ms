@@ -1,1 +1,4 @@
+br/com/gestrest/pagamento/service/adapters/in/event/PedidoEventConsumerTest.class
+br/com/gestrest/pagamento/service/adapters/out/integration/PaymentGatewayAdapterTest.class
+br/com/gestrest/pagamento/service/adapters/out/persistence/UserDetailsImplTest.class
 br/com/gestrest/pagamento/service/application/usecase/impl/pagamento/ProcessarPagamentoUseCaseImplTest.class
