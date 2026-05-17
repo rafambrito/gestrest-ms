@@ -11,30 +11,30 @@ import org.junit.jupiter.api.Test;
 class UsuarioTest {
 
     @Test
-    @DisplayName("isDono e isCliente devem ser baseados no ID do TipoUsuarioEnum")
+    @DisplayName("isAdmin e isCliente devem ser baseados no ID do TipoUsuarioEnum")
     void criarEFlags() {
-        var tipoDono = TipoUsuario.existente(TipoUsuarioEnum.DONO_RESTAURANTE.getId(), "DONO_RESTAURANTE");
+        var tipoAdmin = TipoUsuario.existente(TipoUsuarioEnum.ADMIN.getId(), "ADMIN");
         var tipoCliente = TipoUsuario.existente(TipoUsuarioEnum.CLIENTE.getId(), "CLIENTE");
 
-        var dono = Usuario.criar("Rafael Brito", "rafael.brito@gestrest.com", "rafael.brito", "Senha@123", tipoDono);
+        var admin = Usuario.criar("Rafael Brito", "rafael.brito@gestrest.com", "rafael.brito", "Senha@123", tipoAdmin);
         var cliente = Usuario.criar("José Pereira", "jose.pereira@gestrest.com", "jose.pereira", "Senha@456", tipoCliente);
 
-        assertTrue(dono.isDono());
-        assertFalse(dono.isCliente());
+        assertTrue(admin.isDono());
+        assertFalse(admin.isCliente());
         assertTrue(cliente.isCliente());
         assertFalse(cliente.isDono());
     }
 
     @Test
-    @DisplayName("alterarTipoUsuario deve refletir no isDono e atualizarDados altera o nome")
+    @DisplayName("alterarTipoUsuario deve refletir no isAdmin e atualizarDados altera o nome")
     void alterarTipoEAtualizarDados() {
         var tipo = TipoUsuario.existente(TipoUsuarioEnum.CLIENTE.getId(), "CLIENTE");
         var usuario = Usuario.criar("Rafael Brito", "rafael.brito@gestrest.com", "rafael.brito", "Senha@789", tipo);
         assertTrue(usuario.isCliente());
 
-        var novoDono = TipoUsuario.existente(TipoUsuarioEnum.DONO_RESTAURANTE.getId(), "DONO_RESTAURANTE");
-        usuario.alterarTipoUsuario(novoDono);
-        assertEquals("DONO_RESTAURANTE", usuario.getTipoUsuario().getNome());
+        var novoAdmin = TipoUsuario.existente(TipoUsuarioEnum.ADMIN.getId(), "ADMIN");
+        usuario.alterarTipoUsuario(novoAdmin);
+        assertEquals("ADMIN", usuario.getTipoUsuario().getNome());
         assertTrue(usuario.isDono());
         assertFalse(usuario.isCliente());
 
@@ -73,7 +73,7 @@ class UsuarioTest {
     @DisplayName("atualizar deve setar dataUltimaAlteracao e atualizar os campos")
     void atualizarDeveSetarDataUltimaAlteracao() {
         var tipo = TipoUsuario.existente(1L, "CLIENTE");
-        var novoTipo = TipoUsuario.existente(2L, "DONO_RESTAURANTE");
+        var novoTipo = TipoUsuario.existente(2L, "ADMIN");
         var usuario = Usuario.criar("João da Silva", "joao.silva@gestrest.com", "joao.silva", "Senha@111", tipo);
         var before = LocalDateTime.now().minusSeconds(1);
 
@@ -81,7 +81,7 @@ class UsuarioTest {
 
         assertNotNull(usuario.getDataUltimaAlteracao());
         assertTrue(usuario.getDataUltimaAlteracao().isAfter(before));
-        assertEquals("DONO_RESTAURANTE", usuario.getTipoUsuario().getNome());
+        assertEquals("ADMIN", usuario.getTipoUsuario().getNome());
     }
 
     @Test

@@ -1,9 +1,9 @@
 INSERT INTO tipo_usuario (nome_tipo)
-SELECT 'DONO'
+SELECT 'ADMIN'
 WHERE NOT EXISTS (
     SELECT 1
     FROM tipo_usuario
-    WHERE nome_tipo = 'DONO'
+    WHERE nome_tipo = 'ADMIN'
 );
 
 INSERT INTO tipo_usuario (nome_tipo)

@@ -9,11 +9,11 @@ import org.junit.jupiter.api.Test;
 class TipoUsuarioEnumTest {
 
     @Test
-    @DisplayName("Deve possuir os atributos corretos para DONO_RESTAURANTE")
-    void donoRestauranteDeveTermAtributosCorretos() {
-        var tipo = TipoUsuarioEnum.DONO_RESTAURANTE;
+    @DisplayName("Deve possuir os atributos corretos para ADMIN")
+    void adminDeveTermAtributosCorretos() {
+        var tipo = TipoUsuarioEnum.ADMIN;
         assertEquals(1L, tipo.getId());
-        assertEquals("Dono de Restaurante", tipo.getDescricao());
+        assertEquals("Administrador", tipo.getDescricao());
     }
 
     @Test
@@ -25,11 +25,11 @@ class TipoUsuarioEnumTest {
     }
 
     @Test
-    @DisplayName("fromId deve retornar DONO_RESTAURANTE para id 1")
-    void fromIdDeveRetornarDonoRestaurante() {
+    @DisplayName("fromId deve retornar ADMIN para id 1")
+    void fromIdDeveRetornarAdmin() {
         var resultado = TipoUsuarioEnum.fromId(1L);
         assertTrue(resultado.isPresent());
-        assertEquals(TipoUsuarioEnum.DONO_RESTAURANTE, resultado.get());
+        assertEquals(TipoUsuarioEnum.ADMIN, resultado.get());
     }
 
     @Test

@@ -27,12 +27,12 @@ src/main/java/br/com/gestrest/auth/service/
 ## 🧩 Entidades principais
 
 - **Usuario**: Usuário do sistema com dados de autenticação
-- **TipoUsuario**: Tipo/role do usuário (Cliente, Dono de Restaurante)
+- **TipoUsuario**: Tipo/role do usuário (Cliente, Administrador)
 
 ## 👤 Roles
 
 - `ROLE_CLIENTE`: Usuário cliente
-- `ROLE_DONO`: Dono de restaurante
+- `ROLE_ADMIN`: Administrador (restaurante)
 
 ## ⚙️ Use cases principais
 

@@ -25,7 +25,7 @@ class TipoUsuarioTest {
         assertEquals("COORDENADOR_ATENDIMENTO", tipo.getNome());
 
         var a = TipoUsuario.existente(1L, "CLIENTE");
-        var b = TipoUsuario.existente(1L, "DONO_RESTAURANTE");
+        var b = TipoUsuario.existente(1L, "ADMIN");
         assertEquals(a, b);
         assertEquals(a.hashCode(), b.hashCode());
     }

@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public enum TipoUsuarioEnum {
 
-    DONO_RESTAURANTE(1L, "Dono de Restaurante"),
+    ADMIN(1L, "Administrador"),
     CLIENTE(2L, "Cliente");
 
     private final Long id;

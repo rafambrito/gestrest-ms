@@ -160,7 +160,7 @@ public class Usuario {
 
     public boolean isDono() {
         return this.tipoUsuario != null
-                && TipoUsuarioEnum.DONO_RESTAURANTE.getId().equals(this.tipoUsuario.getId());
+                && TipoUsuarioEnum.ADMIN.getId().equals(this.tipoUsuario.getId());
     }
 
     public boolean isCliente() {
