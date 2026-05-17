@@ -27,7 +27,7 @@ public interface RestauranteControllerDoc {
 
     @Operation(
         summary = "Criar novo restaurante",
-        description = "Cria um novo restaurante no sistema. Um restaurante deve ter um dono (usuário) associado e informações como tipo de cozinha e horário de funcionamento",
+        description = "Cria um novo restaurante no sistema. Um restaurante deve ter um administrador (usuário com role ADMIN) associado e informações como tipo de cozinha e horário de funcionamento",
         tags = {"Restaurantes"}
     )
     @ApiResponses(value = {
@@ -74,7 +74,7 @@ public interface RestauranteControllerDoc {
 
     @Operation(
         summary = "Buscar restaurante por ID",
-        description = "Retorna os detalhes de um restaurante específico incluindo tipo de cozinha, horário e informações do dono",
+        description = "Retorna os detalhes de um restaurante específico incluindo tipo de cozinha, horário e ID do administrador",
         tags = {"Restaurantes"}
     )
     @ApiResponses(value = {

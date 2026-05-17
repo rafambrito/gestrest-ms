@@ -126,7 +126,6 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			<!-- JaCoCo plugin for coverage reporting -->
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>

@@ -9,6 +9,6 @@ public record AtualizarRestauranteRequest(
     @NotBlank @Size(max = 250) String endereco,
     @NotBlank @Size(max = 100) String tipoCozinha,
     @NotBlank @Size(max = 100) String horarioFuncionamento,
-    @NotNull(message = "Dono é obrigatório") Long donoId,
+    @NotNull(message = "Administrador é obrigatório") Long donoId,
     boolean ativo) {
 }

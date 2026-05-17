@@ -43,7 +43,7 @@ class GlobalExceptionHandlerTest {
     @Test
     void handleBusiness() {
         WebRequest req = new ServletWebRequest(new MockHttpServletRequest());
-        ResponseEntity<ProblemDetail> r = handler.handleBadRequest(new BusinessException("Apenas usuarios com perfil DONO_RESTAURANTE podem criar restaurantes"), req);
+        ResponseEntity<ProblemDetail> r = handler.handleBadRequest(new BusinessException("Apenas usuarios com perfil ADMIN podem criar restaurantes"), req);
         ProblemDetail body = Objects.requireNonNull(r.getBody());
         assertEquals(400, body.getStatus());
     }
@@ -51,10 +51,10 @@ class GlobalExceptionHandlerTest {
     @Test
     void handleIllegalArgument() {
         WebRequest req = new ServletWebRequest(new MockHttpServletRequest());
-        ResponseEntity<ProblemDetail> r = handler.handleBadRequest(new IllegalArgumentException("Dono é obrigatório"), req);
+        ResponseEntity<ProblemDetail> r = handler.handleBadRequest(new IllegalArgumentException("Administrador é obrigatório"), req);
         ProblemDetail body = Objects.requireNonNull(r.getBody());
         assertEquals(400, body.getStatus());
-        assertEquals("Dono é obrigatório", body.getDetail());
+        assertEquals("Administrador é obrigatório", body.getDetail());
     }
 
     @Test
