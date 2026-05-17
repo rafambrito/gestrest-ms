@@ -11,9 +11,9 @@ import br.com.gestrest.pedido.service.domain.model.Pedido;
 @Component
 public class PedidoWebMapper {
 
-    public CriarPedidoCommand toCommand(CriarPedidoRequest request) {
+    public CriarPedidoCommand toCommand(CriarPedidoRequest request, Long usuarioId) {
         return new CriarPedidoCommand(
-                request.usuarioId(),
+                usuarioId,
                 request.restauranteId(),
                 request.itens().stream()
                         .map(i -> new CriarPedidoCommand.ItemPedidoCommand(i.itemCardapioId(), i.nomeItem(), i.quantidade(),

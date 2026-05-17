@@ -1,5 +1,6 @@
 package br.com.gestrest.pedido.service.application.usecase.impl.pedido;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import br.com.gestrest.pedido.service.application.usecase.command.pedido.CriarPedidoCommand;
@@ -7,24 +8,18 @@ import br.com.gestrest.pedido.service.domain.model.ItemPedido;
 import br.com.gestrest.pedido.service.domain.model.Pedido;
 import br.com.gestrest.pedido.service.domain.model.event.PedidoCriadoEvent;
 import br.com.gestrest.pedido.service.domain.model.ports.in.pedido.CriarPedidoUseCase;
-import br.com.gestrest.pedido.service.domain.model.ports.out.PagamentoClientPort;
-import br.com.gestrest.pedido.service.domain.model.ports.out.PagamentoEventPublisherPort;
 import br.com.gestrest.pedido.service.domain.model.ports.out.PedidoEventPublisherPort;
 import br.com.gestrest.pedido.service.domain.model.ports.out.PedidoRepositoryPort;
 
 public class CriarPedidoUseCaseImpl implements CriarPedidoUseCase {
 
     private final PedidoRepositoryPort pedidoRepository;
-    private final PagamentoClientPort pagamentoProcessador;
     private final PedidoEventPublisherPort pedidoEventPublisher;
-    private final PagamentoEventPublisherPort pagamentoEventPublisher;
 
-    public CriarPedidoUseCaseImpl(PedidoRepositoryPort pedidoRepository, PagamentoClientPort pagamentoProcessador,
-            PedidoEventPublisherPort pedidoEventPublisher, PagamentoEventPublisherPort pagamentoEventPublisher) {
+    public CriarPedidoUseCaseImpl(PedidoRepositoryPort pedidoRepository,
+            PedidoEventPublisherPort pedidoEventPublisher) {
         this.pedidoRepository = pedidoRepository;
-        this.pagamentoProcessador = pagamentoProcessador;
         this.pedidoEventPublisher = pedidoEventPublisher;
-        this.pagamentoEventPublisher = pagamentoEventPublisher;
     }
 
     @Override
@@ -36,23 +31,18 @@ public class CriarPedidoUseCaseImpl implements CriarPedidoUseCase {
         Pedido pedido = Pedido.criar(command.usuarioId(), command.restauranteId(), itens);
         Pedido salvo = pedidoRepository.salvar(pedido);
 
+        // marcar como pendente de pagamento e persistir antes de publicar o evento
+        salvo.marcarPendentePagamento();
+        pedidoRepository.salvar(salvo);
+
         pedidoEventPublisher.publicarPedidoCriado(
-                new PedidoCriadoEvent(salvo.getId(), salvo.getUsuarioId(), salvo.getRestauranteId(), salvo.getValorTotal()));
+                new PedidoCriadoEvent(
+                        salvo.getId(),
+                        salvo.getRestauranteId(),
+                        salvo.getUsuarioId(),
+                        salvo.getValorTotal(),
+                        LocalDateTime.now()));
 
-        try {
-            boolean aprovado = pagamentoProcessador.processar(salvo.getId(), salvo.getUsuarioId(), salvo.getValorTotal());
-            if (aprovado) {
-                salvo.marcarPago();
-                pagamentoEventPublisher.publicarPagamentoAprovado(salvo.getId(), salvo.getUsuarioId());
-            } else {
-                salvo.marcarPendentePagamento();
-                pagamentoEventPublisher.publicarPagamentoPendente(salvo.getId(), salvo.getUsuarioId());
-            }
-        } catch (RuntimeException ex) {
-            salvo.marcarPendentePagamento();
-            pagamentoEventPublisher.publicarPagamentoPendente(salvo.getId(), salvo.getUsuarioId());
-        }
-
-        return pedidoRepository.salvar(salvo);
+        return salvo;
     }
 }

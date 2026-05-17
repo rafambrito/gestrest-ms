@@ -66,7 +66,7 @@
 			"name": "2. Gestão de Usuários",
 			"item": [
 				{
-					"name": "Cadastrar Usuário Dono",
+					"name": "Cadastrar Usuário Administrador",
 					"event": [ { "listen": "test", "script": { "exec": ["pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });"] } } ],
 					"request": {
 						"method": "POST",
@@ -126,7 +126,7 @@
 					}
 				},
 				{
-					"name": "Criar Restaurante (ERRO - Usuário não é Dono)",
+					"name": "Criar Restaurante (ERRO - Usuário não é Administrador)",
 					"event": [ { "listen": "test", "script": { "exec": ["pm.test(\"Status code is 4xx\", function () { pm.expect(pm.response.code).to.be.within(400, 499); });"] } } ],
 					"request": {
 						"method": "POST",
@@ -134,7 +134,7 @@
 						"body": { "mode": "raw", "raw": "{\n    \"nome\": \"Tentativa Inválida\",\n    \"endereco\": \"Rua Falsa, 123\",\n    \"tipoCozinha\": \"Fast Food\",\n    \"horarioFuncionamento\": \"08:00 - 18:00\",\n    \"donoId\": 2\n}", "options": { "raw": { "language": "json" } } },
 						"url": { "raw": "{{base_url}}/api/v1/restaurantes", "host": ["{{base_url}}"], "path": ["api", "v1", "restaurantes"] }
 					},
-					"description": "Valida a regra de negócio do UseCase: apenas usuários com perfil DONO podem criar."
+					"description": "Valida a regra de negócio do UseCase: apenas usuários com perfil ADMIN podem criar."
 				},
 				{
 					"name": "Listar Restaurantes",

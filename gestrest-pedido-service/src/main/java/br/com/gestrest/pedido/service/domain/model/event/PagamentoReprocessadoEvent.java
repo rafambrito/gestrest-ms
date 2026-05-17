@@ -1,12 +1,10 @@
 package br.com.gestrest.pedido.service.domain.model.event;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record PedidoCriadoEvent(
+public record PagamentoReprocessadoEvent(
         Long pedidoId,
-        Long restauranteId,
         Long usuarioId,
-        BigDecimal valor,
+        String motivo,
         LocalDateTime timestamp) {
 }

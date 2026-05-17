@@ -10,7 +10,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public record CriarPedidoRequest(
-        @NotNull(message = "Usuario e obrigatorio") Long usuarioId,
         @NotNull(message = "Restaurante e obrigatorio") Long restauranteId,
         @NotEmpty(message = "Pedido deve conter itens") List<@Valid ItemPedidoRequest> itens) {
 

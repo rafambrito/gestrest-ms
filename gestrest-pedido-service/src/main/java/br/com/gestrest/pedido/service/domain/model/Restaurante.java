@@ -68,7 +68,7 @@ public class Restaurante {
 			throw new IllegalArgumentException("Horário de funcionamento deve ter no máximo 100 caracteres");
 
 		if (donoId == null)
-			throw new IllegalArgumentException("Dono é obrigatório");
+			throw new IllegalArgumentException("Administrador é obrigatório");
 	}
 
 	public Long getId() {

@@ -1,6 +1,21 @@
 spring:
   application:
-    name: gestrest-api
+    name: gestrest-pedido-service
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: pedido-service
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+    listener:
+      missing-topics-fatal: false
 
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -11,14 +26,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
-    # Adiar inicialização do datasource até que o JPA esteja pronto ( necessário para Spring Boot >= 2.5 )
     defer-datasource-initialization: true
 
-  # Garantir execução de scripts SQL (data.sql) na inicialização
   sql:
     init:
       mode: always
@@ -29,7 +42,7 @@ server:
 gestrest:
   pagamento:
     service:
-      url: http://localhost:8082/api/v1/pagamentos
+      url: http://localhost:8084/api/v1/pagamentos
 
 resilience4j:
   retry:

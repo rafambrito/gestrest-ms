@@ -20,7 +20,6 @@ import br.com.gestrest.pedido.service.application.usecase.command.pedido.CriarPe
 import br.com.gestrest.pedido.service.application.usecase.impl.pedido.CriarPedidoUseCaseImpl;
 import br.com.gestrest.pedido.service.domain.model.Pedido;
 import br.com.gestrest.pedido.service.domain.model.PedidoStatusEnum;
-import br.com.gestrest.pedido.service.domain.model.ports.out.PagamentoClientPort;
 import br.com.gestrest.pedido.service.domain.model.ports.out.PagamentoEventPublisherPort;
 import br.com.gestrest.pedido.service.domain.model.ports.out.PedidoEventPublisherPort;
 import br.com.gestrest.pedido.service.domain.model.ports.out.PedidoRepositoryPort;
@@ -31,9 +30,6 @@ class CriarPedidoUseCaseImplTest {
 
     @Mock
     private PedidoRepositoryPort pedidoRepository;
-
-    @Mock
-    private PagamentoClientPort pagamentoProcessador;
 
     @Mock
     private PedidoEventPublisherPort pedidoEventPublisher;
@@ -56,14 +52,13 @@ class CriarPedidoUseCaseImplTest {
             }
             return pedido;
         });
-        when(pagamentoProcessador.processar(any(Long.class), any(Long.class), any(BigDecimal.class))).thenReturn(true);
-
         var criado = useCase.criar(command);
 
         assertEquals(1L, criado.getId());
-        assertEquals(PedidoStatusEnum.PAGO, criado.getStatus());
+        // After migration to event-driven flow, initial status must be PENDENTE_PAGAMENTO
+        assertEquals(PedidoStatusEnum.PENDENTE_PAGAMENTO, criado.getStatus());
         assertEquals(0, criado.getValorTotal().compareTo(new BigDecimal("85.80")));
-        verify(pagamentoEventPublisher).publicarPagamentoAprovado(1L, 1L);
+        verify(pedidoEventPublisher).publicarPedidoCriado(any());
     }
 
     @Test
@@ -78,12 +73,10 @@ class CriarPedidoUseCaseImplTest {
             }
             return pedido;
         });
-        when(pagamentoProcessador.processar(any(Long.class), any(Long.class), any(BigDecimal.class))).thenReturn(false);
-
         var criado = useCase.criar(command);
 
         assertEquals(1L, criado.getId());
         assertEquals(PedidoStatusEnum.PENDENTE_PAGAMENTO, criado.getStatus());
-        verify(pagamentoEventPublisher).publicarPagamentoPendente(1L, 1L);
+        verify(pedidoEventPublisher).publicarPedidoCriado(any());
     }
 }

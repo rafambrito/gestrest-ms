@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.client.RestClientException;
 
 import br.com.gestrest.pedido.service.adapters.out.integration.dto.PagamentoRequest;
 import br.com.gestrest.pedido.service.adapters.out.integration.dto.PagamentoResponse;
@@ -29,11 +28,13 @@ public class PagamentoClientAdapter implements PagamentoClientPort {
     public boolean processar(Long pedidoId, Long usuarioId, BigDecimal valorTotal) {
         try {
             PagamentoRequest request = new PagamentoRequest(pedidoId, usuarioId, valorTotal);
+            
             PagamentoResponse response = restTemplate.postForObject(
                     pagamentoServiceUrl != null ? pagamentoServiceUrl : "",
                     request,
                     PagamentoResponse.class);
-
+            
+            
             if (response != null && response.aprovado() != null) {
                 return response.aprovado();
             }

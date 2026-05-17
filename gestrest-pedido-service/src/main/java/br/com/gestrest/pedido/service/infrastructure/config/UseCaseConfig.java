@@ -18,17 +18,13 @@ import br.com.gestrest.pedido.service.domain.model.ports.out.PedidoRepositoryPor
 public class UseCaseConfig {
 
 	@Bean
-	public CriarPedidoUseCase criarPedidoUseCase(
-			PedidoRepositoryPort pedidoRepository,
-			PagamentoClientPort pagamentoProcessador,
-			PedidoEventPublisherPort pedidoEventPublisher,
-			PagamentoEventPublisherPort pagamentoEventPublisher) {
+	    public CriarPedidoUseCase criarPedidoUseCase(
+		    PedidoRepositoryPort pedidoRepository,
+		    PedidoEventPublisherPort pedidoEventPublisher) {
 		return new CriarPedidoUseCaseImpl(
-				pedidoRepository,
-				pagamentoProcessador,
-				pedidoEventPublisher,
-				pagamentoEventPublisher);
-	}
+			pedidoRepository,
+			pedidoEventPublisher);
+	    }
 
 	@Bean
 	public BuscarPedidoPorIdUseCase buscarPedidoPorIdUseCase(PedidoRepositoryPort pedidoRepository) {
