@@ -80,13 +80,13 @@ Após iniciar o serviço, acesse a documentação Swagger em: [http://localhost:
 ## ▶️ Execução
 
 ```bash
-./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 
 ## 🧪 Testes
 
 ```bash
-./mvnw test
+mvn test
 ```
 
 ## 📊 Cobertura Jacoco
@@ -94,5 +94,5 @@ Após iniciar o serviço, acesse a documentação Swagger em: [http://localhost:
 Após executar os testes, abra o relatório local em `target/site/jacoco/index.html`.
 
 ```bash
-./mvnw test
+mvn test
 ```

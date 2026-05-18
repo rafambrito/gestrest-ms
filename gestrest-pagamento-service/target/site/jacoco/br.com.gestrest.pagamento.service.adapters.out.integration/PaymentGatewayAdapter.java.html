@@ -60,16 +60,16 @@ public class PaymentGatewayAdapter implements PagamentoGatewayPort {
         }
     }
 
-    @TimeLimiter(name = &quot;pagamentoService&quot;, fallbackMethod = &quot;fallbackPagamentoAsync&quot;)
     public CompletableFuture&lt;PagamentoGatewayResponse&gt; iniciarPagamentoAsync(Long pagamentoId, Long pedidoId, Long clienteId, BigDecimal valor) {
-<span class="fc" id="L65">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L64">        return CompletableFuture.supplyAsync(() -&gt; {</span>
             try {
-<span class="fc" id="L67">                var requisicao = new ProcpagRequisicaoRequest(pagamentoId.toString(), clienteId.toString(), valor);</span>
+<span class="fc" id="L66">                var requisicao = new ProcpagRequisicaoRequest(pagamentoId.toString(), clienteId.toString(), valor);</span>
+
 <span class="fc" id="L68">                var response = restTemplate.postForObject(</span>
 <span class="fc" id="L69">                    procpagUrl + &quot;/requisicao&quot;,</span>
 <span class="fc" id="L70">                    requisicao,</span>
 <span class="fc" id="L71">                    ProcpagRequisicaoResponse.class</span>
-                );
+                );     
 
 <span class="pc bpc" id="L74" title="1 of 2 branches missed.">                if (response == null) {</span>
 <span class="nc" id="L75">                    log.warn(&quot;Resposta nula do procpag para pagamento: {}&quot;, pagamentoId);</span>
@@ -84,37 +84,38 @@ public class PaymentGatewayAdapter implements PagamentoGatewayPort {
 <span class="fc" id="L84">                throw ex;</span>
             }
         });
+ 
     }
 
     @Override
     public String consultarStatus(String pagamentoIdExterno) {
-<span class="nc bnc" id="L91" title="All 2 branches missed.">        if (pagamentoIdExterno == null) {</span>
-<span class="nc" id="L92">            return &quot;falha&quot;;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        if (pagamentoIdExterno == null) {</span>
+<span class="nc" id="L93">            return &quot;falha&quot;;</span>
         }
-<span class="nc" id="L94">        return consultarStatusRequisicao(pagamentoIdExterno);</span>
+<span class="nc" id="L95">        return consultarStatusRequisicao(pagamentoIdExterno);</span>
     }
 
     private String consultarStatusRequisicao(String pagamentoIdExterno) {
         try {
-<span class="fc" id="L99">            var response = restTemplate.getForObject(</span>
-<span class="fc" id="L100">                procpagUrl + &quot;/requisicao/&quot; + pagamentoIdExterno,</span>
-<span class="fc" id="L101">                ProcpagRequisicaoResponse.class</span>
+<span class="fc" id="L100">            var response = restTemplate.getForObject(</span>
+<span class="fc" id="L101">                procpagUrl + &quot;/requisicao/&quot; + pagamentoIdExterno,</span>
+<span class="fc" id="L102">                ProcpagRequisicaoResponse.class</span>
             );
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">            return response != null ? response.getStatus() : &quot;falha&quot;;</span>
-<span class="nc" id="L104">        } catch (RestClientException ex) {</span>
-<span class="nc" id="L105">            log.error(&quot;Erro ao consultar status da requisição: {}&quot;, pagamentoIdExterno, ex);</span>
-<span class="nc" id="L106">            return &quot;falha&quot;;</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">            return response != null ? response.getStatus() : &quot;falha&quot;;</span>
+<span class="nc" id="L105">        } catch (RestClientException ex) {</span>
+<span class="nc" id="L106">            log.error(&quot;Erro ao consultar status da requisição: {}&quot;, pagamentoIdExterno, ex);</span>
+<span class="nc" id="L107">            return &quot;falha&quot;;</span>
         }
     }
 
     public PagamentoGatewayResponse fallbackPagamento(Long pagamentoId, Long pedidoId, Long clienteId, BigDecimal valor, Throwable ex) {
-<span class="fc" id="L111">        log.error(&quot;Fallback acionado para pagamento pendente. pagamentoId={}, pedidoId={}, usuarioId={}&quot;, pagamentoId, pedidoId, clienteId, ex);</span>
-<span class="fc" id="L112">        return new PagamentoGatewayResponse(null, &quot;PENDENTE&quot;);</span>
+<span class="fc" id="L112">        log.error(&quot;Fallback acionado para pagamento pendente. pagamentoId={}, pedidoId={}, usuarioId={}&quot;, pagamentoId, pedidoId, clienteId, ex);</span>
+<span class="fc" id="L113">        return new PagamentoGatewayResponse(null, &quot;PENDENTE&quot;);</span>
     }
 
     public CompletableFuture&lt;PagamentoGatewayResponse&gt; fallbackPagamentoAsync(Long pagamentoId, Long pedidoId, Long clienteId, BigDecimal valor, Throwable ex) {
-<span class="fc" id="L116">        log.error(&quot;Fallback async acionado para pagamento pendente. pagamentoId={}, pedidoId={}, usuarioId={}&quot;, pagamentoId, pedidoId, clienteId, ex);</span>
-<span class="fc" id="L117">        return CompletableFuture.completedFuture(new PagamentoGatewayResponse(null, &quot;PENDENTE&quot;));</span>
+<span class="fc" id="L117">        log.error(&quot;Fallback async acionado para pagamento pendente. pagamentoId={}, pedidoId={}, usuarioId={}&quot;, pagamentoId, pedidoId, clienteId, ex);</span>
+<span class="fc" id="L118">        return CompletableFuture.completedFuture(new PagamentoGatewayResponse(null, &quot;PENDENTE&quot;));</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

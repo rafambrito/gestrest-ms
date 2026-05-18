@@ -26,7 +26,7 @@ public class ProcessarPagamentoUseCaseImpl implements ProcessarPagamentoUseCase,
             PagamentoEventPublisherPort pagamentoEventPublisher) {
 <span class="fc" id="L27">        this.pagamentoRepository = pagamentoRepository;</span>
 <span class="fc" id="L28">        this.pagamentoGateway = pagamentoGateway;</span>
-<span class="fc" id="L29">        this.pagamentoEventPublisher = pagamentoEventPublisher;</span>
+<span class="fc" id="L29">        this.pagamentoEventPublisher = pagamentoEventPublisher; </span>
 <span class="fc" id="L30">    }</span>
 
     @Override
@@ -94,8 +94,8 @@ public class ProcessarPagamentoUseCaseImpl implements ProcessarPagamentoUseCase,
     @Override
     public void onPedidoCriado(PedidoCriadoEvent event) {
 <span class="nc" id="L96">        var command = new ProcessarPagamentoCommand(event.pedidoId(), event.usuarioId(), event.valor());</span>
-<span class="nc" id="L97">        processar(command);</span>
-<span class="nc" id="L98">        log.info(&quot;Processamento de pagamento iniciado via evento PedidoCriado para pedidoId={}&quot;, event.pedidoId());</span>
+<span class="nc" id="L97">        log.info(&quot;Processamento de pagamento iniciado via evento PedidoCriado para pedidoId={}&quot;, event.pedidoId());</span>
+<span class="nc" id="L98">        processar(command);        </span>
 <span class="nc" id="L99">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

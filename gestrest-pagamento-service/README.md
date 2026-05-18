@@ -65,7 +65,7 @@ Após iniciar o serviço, acesse a documentação Swagger em: [http://localhost:
 ## ▶️ Execução local
 
 ```bash
-./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 
 ## ▶️ Execução em Docker
@@ -77,7 +77,7 @@ docker compose up --build
 ## 🧪 Testes
 
 ```bash
-./mvnw test
+mvn test
 ```
 
 ## 📊 Cobertura Jacoco
@@ -85,5 +85,5 @@ docker compose up --build
 Após executar os testes, abra o relatório local em `target/site/jacoco/index.html`.
 
 ```bash
-./mvnw test
+mvn test
 ```

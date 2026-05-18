@@ -6,7 +6,7 @@ Autenticação, gestão de usuários e proteção de endpoints via JWT.
 ## 🧱 Arquitetura
 Clean Architecture com Ports and Adapters.
 
-## � Estrutura
+## 📁 Estrutura
 
 ```
 src/main/java/br/com/gestrest/auth/service/
@@ -82,13 +82,13 @@ A segurança é aplicada via `SecurityConfig` e `JwtAuthenticationFilter`. O fil
 ## ▶️ Execução
 
 ```bash
-./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 
 ## 🧪 Testes
 
 ```bash
-./mvnw test
+mvn test
 ```
 
 ## 📊 Cobertura Jacoco
@@ -96,5 +96,5 @@ A segurança é aplicada via `SecurityConfig` e `JwtAuthenticationFilter`. O fil
 Após executar os testes, abra o relatório local em `target/site/jacoco/index.html`.
 
 ```bash
-./mvnw test
+mvn test
 ```
