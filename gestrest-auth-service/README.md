@@ -6,7 +6,7 @@ Autenticação, gestão de usuários e proteção de endpoints via JWT.
 ## 🧱 Arquitetura
 Clean Architecture com Ports and Adapters.
 
-## 📂 Estrutura
+## � Estrutura
 
 ```
 src/main/java/br/com/gestrest/auth/service/
