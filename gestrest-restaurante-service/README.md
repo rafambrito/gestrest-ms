@@ -39,6 +39,14 @@ src/main/java/br/com/gestrest/restaurante/service/
 - AtualizarItemCardapioUseCase
 - ExcluirItemCardapioUseCase
 
+## 📖 Documentação da API (Swagger)
+
+Após iniciar o serviço, acesse a documentação Swagger em: [http://localhost:8082/swagger-ui.html](http://localhost:8082/swagger-ui.html)
+
+- `GET /api/v1/itens-cardapio?restauranteId={id}`
+- `PUT /api/v1/itens-cardapio/{id}`
+- `DELETE /api/v1/itens-cardapio/{id}`
+
 ## 🌐 Endpoints
 
 - `POST /api/v1/restaurantes`
@@ -48,13 +56,6 @@ src/main/java/br/com/gestrest/restaurante/service/
 - `DELETE /api/v1/restaurantes/{id}`
 - `POST /api/v1/itens-cardapio`
 - `GET /api/v1/itens-cardapio/{id}`
-
-## 📖 Documentação da API (Swagger)
-
-Após iniciar o serviço, acesse a documentação Swagger em: [http://localhost:8082/swagger-ui.html](http://localhost:8082/swagger-ui.html)
-- `GET /api/v1/itens-cardapio?restauranteId={id}`
-- `PUT /api/v1/itens-cardapio/{id}`
-- `DELETE /api/v1/itens-cardapio/{id}`
 
 ## 🔄 Sequência
 
@@ -67,4 +68,18 @@ Após iniciar o serviço, acesse a documentação Swagger em: [http://localhost:
 
 ```bash
 ./mvnw spring-boot:run
+```
+
+## 🧪 Testes
+
+```bash
+./mvnw test
+```
+
+## 📊 Cobertura Jacoco
+
+Após executar os testes, abra o relatório local em `target/site/jacoco/index.html`.
+
+```bash
+./mvnw test
 ```

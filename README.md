@@ -108,6 +108,18 @@ sequenceDiagram
 docker compose up --build
 ```
 
+## 🧪 Testes
+
+Cada microserviço possui testes unitários. Execute o comando dentro do diretório do serviço:
+
+```bash
+cd gestrest-auth-service && ./mvnw test
+```
+
+## 📊 Cobertura Jacoco
+
+Após executar os testes em um serviço, abra o relatório em `target/site/jacoco/index.html` dentro do diretório desse serviço.
+
 ## 🐳 Serviços executados
 
 O ambiente sobe automaticamente:

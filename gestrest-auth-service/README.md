@@ -90,3 +90,11 @@ A segurança é aplicada via `SecurityConfig` e `JwtAuthenticationFilter`. O fil
 ```bash
 ./mvnw test
 ```
+
+## 📊 Cobertura Jacoco
+
+Após executar os testes, abra o relatório local em `target/site/jacoco/index.html`.
+
+```bash
+./mvnw test
+```

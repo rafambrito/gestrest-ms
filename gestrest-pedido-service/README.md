@@ -82,3 +82,17 @@ Após iniciar o serviço, acesse a documentação Swagger em: [http://localhost:
 ```bash
 ./mvnw spring-boot:run
 ```
+
+## 🧪 Testes
+
+```bash
+./mvnw test
+```
+
+## 📊 Cobertura Jacoco
+
+Após executar os testes, abra o relatório local em `target/site/jacoco/index.html`.
+
+```bash
+./mvnw test
+```
