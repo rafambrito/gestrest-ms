@@ -24,17 +24,6 @@ Principais fluxos:
 Cliente → Auth → Pedido → Pagamento → Procpag
 Pedido → Kafka → Pagamento (eventos assíncronos)
 
-## 📁 Estrutura
-
-```
-gestrest-ms/
-├── gestrest-auth-service/
-├── gestrest-restaurante-service/
-├── gestrest-pedido-service/
-├── gestrest-pagamento-service/
-└── docker-compose.yml
-```
-
 ## 🧱 Visão de Arquitetura
 
 ```mermaid
@@ -93,6 +82,16 @@ sequenceDiagram
     end
 ```
 
+## 📁 Estrutura
+
+```
+gestrest-ms/
+├── gestrest-auth-service/
+├── gestrest-restaurante-service/
+├── gestrest-pedido-service/
+├── gestrest-pagamento-service/
+└── docker-compose.yml
+```
 
 ### 📦 Serviços
 

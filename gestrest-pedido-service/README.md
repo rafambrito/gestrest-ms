@@ -7,7 +7,7 @@ Processar pedidos e orquestrar o fluxo de restaurante e pagamento.
 Clean Architecture com Ports and Adapters.
 Cliente → Pedido → Pagamento
 
-## � Estrutura
+## 📁 Estrutura
 
 ```
 src/main/java/br/com/gestrest/pedido/service/

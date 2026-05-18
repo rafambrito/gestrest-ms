@@ -7,7 +7,7 @@ Cadastro e consulta de restaurantes e cardápios.
 Clean Architecture com Ports and Adapters.
 Cliente → Restaurante → Cardápio
 
-## � Estrutura
+## 📁 Estrutura
 
 ```
 src/main/java/br/com/gestrest/restaurante/service/

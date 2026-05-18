@@ -6,7 +6,7 @@ Serviço de pagamento de pedidos. Processa cobrança, define status e publica ev
 ## 🧱 Arquitetura
 Clean Architecture com Ports and Adapters.
 
-## � Estrutura
+## 📁 Estrutura
 
 ```
 src/main/java/br/com/gestrest/pagamento/service/
